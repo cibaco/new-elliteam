@@ -1,0 +1,47 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Docker
+docker-compose.yml
+Dockerfile
+.dockerignore
+
+# Symfony
+/var/*
+!/var/cache
+/var/cache/*
+!var/cache/.gitkeep
+!/var/log
+/var/log/*
+!var/log/.gitkeep
+!/var/sessions
+/var/sessions/*
+!var/sessions/.gitkeep
+
+# Composer
+/vendor/
+
+# Node & Assets
+/node_modules/
+/public/bundles/
+/public/build/
+npm-debug.log
+yarn-error.log
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Tests
+/phpunit.xml
+
+# Environment
+.env.local
+.env.local.php
+.env.*.local

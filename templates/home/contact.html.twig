@@ -1,0 +1,365 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet"  href="{{ asset('css/contact.css') }}">>
+{% endblock stylesheets %}
+
+{% block section %}
+{{ parent() }}
+<!-- HERO CONTACT -->
+<section class="contact-hero">
+    <div class="container">
+        <div class="hero-content-center">
+                <span class="hero-badge">
+                    <i class="fas fa-envelope"></i>
+                    Nous sommes à votre écoute
+                </span>
+            <h1>Contactez-nous</h1>
+            <p>Une question ? Un projet de recrutement ? Notre équipe est là pour vous accompagner dans votre recherche de talents IT.</p>
+        </div>
+    </div>
+</section>
+
+<!-- CONTACT INFO -->
+<section class="contact-info-section">
+    <div class="container">
+        <div class="contact-info-grid">
+            <div class="info-card">
+                <div class="info-icon">
+                    <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <h3>Adresse</h3>
+                <p>123 Avenue de l'Innovation</p>
+                <p>75001 Paris, France</p>
+            </div>
+
+            <div class="info-card">
+                <div class="info-icon">
+                    <i class="fas fa-phone"></i>
+                </div>
+                <h3>Téléphone</h3>
+                <p><a href="tel:+33123456789">+33 1 23 45 67 89</a></p>
+                <p>Lun - Ven : 9h - 18h</p>
+            </div>
+
+            <div class="info-card">
+                <div class="info-icon">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <h3>Email</h3>
+                <p><a href="mailto:contact@techrecruit.fr">contact@techrecruit.fr</a></p>
+                <p><a href="mailto:recrutement@techrecruit.fr">recrutement@techrecruit.fr</a></p>
+            </div>
+
+            <div class="info-card">
+                <div class="info-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <h3>Horaires</h3>
+                <p>Lundi - Vendredi</p>
+                <p>09:00 - 18:00</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CONTACT FORM -->
+<section class="contact-form-section">
+    <div class="container">
+        <div class="contact-wrapper">
+            <!-- Formulaire -->
+            <div class="form-container">
+                <div class="form-header">
+                    <h2>Envoyez-nous un message</h2>
+                    <p>Remplissez le formulaire ci-dessous et nous vous répondrons dans les plus brefs délais.</p>
+                </div>
+
+                <form class="contact-form" id="contactForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName">
+                                <i class="fas fa-user"></i>
+                                Prénom *
+                            </label>
+                            <input
+                                    type="text"
+                                    id="firstName"
+                                    name="firstName"
+                                    placeholder="Jean"
+                                    required
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="lastName">
+                                <i class="fas fa-user"></i>
+                                Nom *
+                            </label>
+                            <input
+                                    type="text"
+                                    id="lastName"
+                                    name="lastName"
+                                    placeholder="Dupont"
+                                    required
+                            >
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email">
+                                <i class="fas fa-envelope"></i>
+                                Email *
+                            </label>
+                            <input
+                                    type="email"
+                                    id="email"
+                                    name="email"
+                                    placeholder="jean.dupont@example.com"
+                                    required
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone">
+                                <i class="fas fa-phone"></i>
+                                Téléphone
+                            </label>
+                            <input
+                                    type="tel"
+                                    id="phone"
+                                    name="phone"
+                                    placeholder="+33 6 12 34 56 78"
+                            >
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="company">
+                            <i class="fas fa-building"></i>
+                            Entreprise
+                        </label>
+                        <input
+                                type="text"
+                                id="company"
+                                name="company"
+                                placeholder="Nom de votre entreprise"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="subject">
+                            <i class="fas fa-tag"></i>
+                            Sujet *
+                        </label>
+                        <select id="subject" name="subject" required>
+                            <option value="">Sélectionnez un sujet</option>
+                            <option value="candidat">Je cherche un emploi</option>
+                            <option value="recruteur">Je recrute des talents</option>
+                            <option value="partenariat">Proposition de partenariat</option>
+                            <option value="information">Demande d'information</option>
+                            <option value="support">Support technique</option>
+                            <option value="autre">Autre</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">
+                            <i class="fas fa-comment"></i>
+                            Message *
+                        </label>
+                        <textarea
+                                id="message"
+                                name="message"
+                                rows="6"
+                                placeholder="Décrivez votre demande en détail..."
+                                required
+                        ></textarea>
+                    </div>
+
+                    <div class="form-group checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="newsletter">
+                            <span class="checkbox-custom"></span>
+                            <span class="checkbox-text">Je souhaite recevoir les actualités et offres de Elliteam</span>
+                        </label>
+                    </div>
+
+                    <div class="form-group checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="consent" required>
+                            <span class="checkbox-custom"></span>
+                            <span class="checkbox-text">J'accepte que mes données soient utilisées pour traiter ma demande *</span>
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn-submit">
+                        <i class="fas fa-paper-plane"></i>
+                        Envoyer le message
+                    </button>
+
+                    <p class="form-note">
+                        <i class="fas fa-lock"></i>
+                        Vos données sont sécurisées et ne seront jamais partagées avec des tiers.
+                    </p>
+                </form>
+
+                <!-- Message de confirmation -->
+                <div class="form-success" id="formSuccess">
+                    <div class="success-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h3>Message envoyé avec succès !</h3>
+                    <p>Nous avons bien reçu votre message et vous répondrons dans les plus brefs délais.</p>
+                    <button class="btn-primary" onclick="resetForm()">Envoyer un autre message</button>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="contact-sidebar">
+                <div class="sidebar-card">
+                    <div class="sidebar-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3>Support Direct</h3>
+                    <p>Besoin d'une réponse immédiate ?</p>
+                    <a href="tel:+33123456789" class="sidebar-link">
+                        <i class="fas fa-phone"></i>
+                        +33 1 23 45 67 89
+                    </a>
+                </div>
+
+                <div class="sidebar-card">
+                    <div class="sidebar-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h3>Chat en direct</h3>
+                    <p>Discutez avec notre équipe</p>
+                    <button class="sidebar-link btn-chat">
+                        <i class="fas fa-comment-dots"></i>
+                        Démarrer une conversation
+                    </button>
+                </div>
+
+                <div class="sidebar-card">
+                    <div class="sidebar-icon">
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                    <h3>FAQ</h3>
+                    <p>Consultez notre centre d'aide</p>
+                    <a href="#faq" class="sidebar-link">
+                        <i class="fas fa-arrow-right"></i>
+                        Voir les questions fréquentes
+                    </a>
+                </div>
+
+                <div class="sidebar-card sidebar-social">
+                    <h3>Suivez-nous</h3>
+                    <div class="social-links">
+                        <a href="#" class="social-link">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-facebook"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- MAP SECTION -->
+<section class="map-section">
+    <div class="map-container">
+        <!-- Remplacer par votre carte Google Maps ou autre -->
+        <div class="map-placeholder">
+            <i class="fas fa-map-marked-alt"></i>
+            <p>123 Avenue de l'Innovation, 75001 Paris</p>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ SECTION -->
+<section class="faq-section" id="faq">
+    <div class="container">
+        <div class="section-header">
+            <h2>Questions Fréquentes</h2>
+            <p>Trouvez rapidement les réponses à vos questions</p>
+        </div>
+
+        <div class="faq-grid">
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3>Comment puis-je postuler à une offre ?</h3>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Pour postuler à une offre, créez d'abord votre compte candidat. Ensuite, parcourez nos offres et cliquez sur "Postuler" sur les offres qui vous intéressent. Vous pourrez télécharger votre CV et lettre de motivation.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3>Comment publier une offre d'emploi ?</h3>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Créez un compte entreprise, puis accédez à votre tableau de bord. Cliquez sur "Publier une offre" et remplissez le formulaire avec les détails du poste. Nos équipes valideront votre offre sous 24h.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3>Quels sont vos tarifs pour les entreprises ?</h3>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Nous proposons plusieurs formules adaptées à vos besoins : offre unique, pack mensuel ou annuel. Contactez notre équipe commerciale pour obtenir un devis personnalisé.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3>Combien de temps reste une offre en ligne ?</h3>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Par défaut, une offre reste en ligne pendant 30 jours. Vous pouvez la prolonger à tout moment depuis votre espace recruteur ou la clôturer dès que vous avez trouvé le candidat idéal.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3>Puis-je modifier mon profil après inscription ?</h3>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Oui, vous pouvez modifier votre profil à tout moment depuis votre espace personnel. Nous vous recommandons de le tenir à jour pour maximiser vos chances de trouver le poste idéal.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3>Proposez-vous des services de sourcing ?</h3>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Oui, notre équipe peut vous accompagner dans la recherche active de candidats. Contactez-nous pour discuter de vos besoins spécifiques et obtenir un accompagnement personnalisé.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+<script src={{ asset('js/contact.js')}}></script>
+{% endblock %}

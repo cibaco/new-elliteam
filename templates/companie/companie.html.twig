@@ -1,0 +1,513 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}À propos - Elliteam{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet"  href="{{ asset('css/companies.css') }}">>
+{% endblock stylesheets %}
+
+{% block section %}
+    {{ parent() }}
+
+<!-- HERO COMPANIES -->
+<section class="companies-hero">
+    <div class="container">
+        <div class="hero-content-center">
+                <span class="hero-badge">
+                    <i class="fas fa-building"></i>
+                    Solutions RH pour entreprises
+                </span>
+            <h1>Trouvez les meilleurs talents IT pour votre entreprise</h1>
+            <p>Accédez à un vivier de 50 000+ développeurs, data scientists et experts IT qualifiés. Simplifiez votre recrutement avec notre plateforme innovante et notre accompagnement personnalisé.</p>
+            <div class="hero-cta">
+                <a href="#register" class="btn-primary-large">
+                    <i class="fas fa-rocket"></i>
+                    Publier une offre gratuitement
+                </a>
+            </div>
+            <div class="hero-trust">
+                <span>Ils nous font confiance :</span>
+                <div class="trust-logos">
+                    <div class="trust-logo"><i class="fas fa-building"></i></div>
+                    <div class="trust-logo"><i class="fas fa-rocket"></i></div>
+                    <div class="trust-logo"><i class="fas fa-brain"></i></div>
+                    <div class="trust-logo"><i class="fas fa-cloud"></i></div>
+                    <div class="trust-logo"><i class="fas fa-globe"></i></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- BENEFITS SECTION -->
+<section class="benefits-section">
+    <div class="container">
+        <div class="section-header">
+            <h2>Pourquoi recruter avec Elliteam ?</h2>
+            <p>Une solution complète pour optimiser votre recrutement IT</p>
+        </div>
+
+        <div class="benefits-grid">
+            <div class="benefit-card">
+                <div class="benefit-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h3>Vivier de talents qualifiés</h3>
+                <p>Accédez à 50 000+ profils IT vérifiés : développeurs, data scientists, DevOps, architectes cloud et bien plus.</p>
+                <ul class="benefit-list">
+                    <li><i class="fas fa-check"></i> Profils vérifiés et à jour</li>
+                    <li><i class="fas fa-check"></i> Tests techniques validés</li>
+                    <li><i class="fas fa-check"></i> Portfolio et réalisations</li>
+                </ul>
+            </div>
+
+            <div class="benefit-card highlight">
+                <div class="benefit-badge">Populaire</div>
+                <div class="benefit-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <h3>Matching IA intelligent</h3>
+                <p>Notre algorithme analyse vos besoins et suggère les candidats les plus pertinents en quelques secondes.</p>
+                <ul class="benefit-list">
+                    <li><i class="fas fa-check"></i> Analyse des compétences techniques</li>
+                    <li><i class="fas fa-check"></i> Compatibilité culturelle</li>
+                    <li><i class="fas fa-check"></i> Prédiction de succès du match</li>
+                </ul>
+            </div>
+
+            <div class="benefit-card">
+                <div class="benefit-icon">
+                    <i class="fas fa-tachometer-alt"></i>
+                </div>
+                <h3>Recrutement rapide</h3>
+                <p>Réduisez votre time-to-hire de 60% grâce à nos outils d'automatisation et notre processus optimisé.</p>
+                <ul class="benefit-list">
+                    <li><i class="fas fa-check"></i> Publication en 5 minutes</li>
+                    <li><i class="fas fa-check"></i> Réponses sous 24h</li>
+                    <li><i class="fas fa-check"></i> Gestion simplifiée des candidatures</li>
+                </ul>
+            </div>
+
+            <div class="benefit-card">
+                <div class="benefit-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h3>Analytics & Reporting</h3>
+                <p>Suivez vos KPIs de recrutement en temps réel et optimisez votre stratégie d'acquisition de talents.</p>
+                <ul class="benefit-list">
+                    <li><i class="fas fa-check"></i> Tableau de bord complet</li>
+                    <li><i class="fas fa-check"></i> Rapports personnalisés</li>
+                    <li><i class="fas fa-check"></i> Analyse de la performance</li>
+                </ul>
+            </div>
+
+            <div class="benefit-card">
+                <div class="benefit-icon">
+                    <i class="fas fa-headset"></i>
+                </div>
+                <h3>Accompagnement dédié</h3>
+                <p>Un Account Manager vous accompagne à chaque étape pour maximiser vos chances de recruter les meilleurs profils.</p>
+                <ul class="benefit-list">
+                    <li><i class="fas fa-check"></i> Support prioritaire 7j/7</li>
+                    <li><i class="fas fa-check"></i> Conseils d'experts RH</li>
+                    <li><i class="fas fa-check"></i> Formation à la plateforme</li>
+                </ul>
+            </div>
+
+            <div class="benefit-card">
+                <div class="benefit-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3>Sécurité & Conformité</h3>
+                <p>Protection totale des données avec conformité RGPD et sécurité de niveau bancaire pour vos recrutements.</p>
+                <ul class="benefit-list">
+                    <li><i class="fas fa-check"></i> Conformité RGPD garantie</li>
+                    <li><i class="fas fa-check"></i> Données chiffrées</li>
+                    <li><i class="fas fa-check"></i> Hébergement sécurisé</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-it-works">
+    <div class="container">
+        <div class="section-header">
+            <h2>Comment ça marche ?</h2>
+            <p>4 étapes simples pour recruter vos talents IT</p>
+        </div>
+
+        <div class="steps-timeline">
+            <div class="step-item">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <div class="step-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <h3>Publiez votre offre</h3>
+                    <p>Créez votre offre d'emploi en moins de 5 minutes avec notre éditeur intuitif. Ajoutez les compétences requises, le salaire et les avantages.</p>
+                    <div class="step-features">
+                        <span><i class="fas fa-clock"></i> 5 min</span>
+                        <span><i class="fas fa-check-circle"></i> Modèles prêts</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="step-item">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <div class="step-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h3>Recevez des candidatures</h3>
+                    <p>Notre IA diffuse votre offre aux candidats pertinents. Recevez des candidatures qualifiées directement dans votre tableau de bord.</p>
+                    <div class="step-features">
+                        <span><i class="fas fa-users"></i> Matching IA</span>
+                        <span><i class="fas fa-bell"></i> Alertes temps réel</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="step-item">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <div class="step-icon">
+                        <i class="fas fa-filter"></i>
+                    </div>
+                    <h3>Sélectionnez les meilleurs</h3>
+                    <p>Filtrez, triez et comparez les candidats. Accédez aux CV, portfolios, tests techniques et recommandations.</p>
+                    <div class="step-features">
+                        <span><i class="fas fa-star"></i> Notation IA</span>
+                        <span><i class="fas fa-comments"></i> Chat intégré</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="step-item">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <div class="step-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h3>Recrutez votre talent</h3>
+                    <p>Organisez des entretiens, négociez et signez. Notre équipe vous accompagne jusqu'à l'intégration du candidat.</p>
+                    <div class="step-features">
+                        <span><i class="fas fa-video"></i> Visio intégrée</span>
+                        <span><i class="fas fa-calendar"></i> Planification auto</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{#<!-- PRICING SECTION -->
+<section class="pricing-section">
+    <div class="container">
+        <div class="section-header">
+            <h2>Nos Offres</h2>
+            <p>Des tarifs adaptés à la taille de votre entreprise</p>
+        </div>
+
+        <div class="pricing-grid">
+            <!-- Starter -->
+            <div class="pricing-card">
+                <div class="pricing-header">
+                    <h3>Starter</h3>
+                    <p>Pour les TPE et startups</p>
+                </div>
+                <div class="pricing-price">
+                    <span class="price">199€</span>
+                    <span class="period">par offre</span>
+                </div>
+                <ul class="pricing-features">
+                    <li><i class="fas fa-check"></i> 1 offre d'emploi</li>
+                    <li><i class="fas fa-check"></i> 30 jours de visibilité</li>
+                    <li><i class="fas fa-check"></i> Matching automatique</li>
+                    <li><i class="fas fa-check"></i> Tableau de bord</li>
+                    <li><i class="fas fa-check"></i> Support email</li>
+                    <li class="disabled"><i class="fas fa-times"></i> Multi-diffusion</li>
+                    <li class="disabled"><i class="fas fa-times"></i> ATS intégré</li>
+                    <li class="disabled"><i class="fas fa-times"></i> Account Manager</li>
+                </ul>
+                <a href="#register" class="btn-pricing">Commencer</a>
+            </div>
+
+            <!-- Pro -->
+            <div class="pricing-card popular">
+                <div class="pricing-badge">Le plus populaire</div>
+                <div class="pricing-header">
+                    <h3>Pro</h3>
+                    <p>Pour les PME en croissance</p>
+                </div>
+                <div class="pricing-price">
+                    <span class="price">499€</span>
+                    <span class="period">par mois</span>
+                </div>
+                <ul class="pricing-features">
+                    <li><i class="fas fa-check"></i> 5 offres simultanées</li>
+                    <li><i class="fas fa-check"></i> 60 jours de visibilité</li>
+                    <li><i class="fas fa-check"></i> Matching IA avancé</li>
+                    <li><i class="fas fa-check"></i> Analytics détaillés</li>
+                    <li><i class="fas fa-check"></i> Support prioritaire</li>
+                    <li><i class="fas fa-check"></i> Multi-diffusion</li>
+                    <li><i class="fas fa-check"></i> ATS intégré</li>
+                    <li class="disabled"><i class="fas fa-times"></i> Account Manager dédié</li>
+                </ul>
+                <a href="#register" class="btn-pricing primary">Démarrer l'essai gratuit</a>
+                <span class="trial-text">14 jours gratuits, sans CB</span>
+            </div>
+
+            <!-- Enterprise -->
+            <div class="pricing-card">
+                <div class="pricing-header">
+                    <h3>Enterprise</h3>
+                    <p>Pour les grandes entreprises</p>
+                </div>
+                <div class="pricing-price">
+                    <span class="price">Sur mesure</span>
+                </div>
+                <ul class="pricing-features">
+                    <li><i class="fas fa-check"></i> Offres illimitées</li>
+                    <li><i class="fas fa-check"></i> Visibilité maximale</li>
+                    <li><i class="fas fa-check"></i> IA personnalisée</li>
+                    <li><i class="fas fa-check"></i> Rapports avancés</li>
+                    <li><i class="fas fa-check"></i> Support 24/7</li>
+                    <li><i class="fas fa-check"></i> Multi-diffusion premium</li>
+                    <li><i class="fas fa-check"></i> ATS complet</li>
+                    <li><i class="fas fa-check"></i> Account Manager dédié</li>
+                    <li><i class="fas fa-check"></i> API & intégrations</li>
+                    <li><i class="fas fa-check"></i> Formation équipe</li>
+                    <li><i class="fas fa-check"></i> Marque blanche (option)</li>
+                </ul>
+                <a href="#contact" class="btn-pricing">Nous contacter</a>
+            </div>
+        </div>
+
+        <div class="pricing-note">
+            <i class="fas fa-info-circle"></i>
+            <p>Tous nos plans incluent l'accès à notre base de 50 000+ candidats, le matching IA et les mises à jour gratuites. Aucun frais caché.</p>
+        </div>
+    </div>
+</section>#}
+
+<!-- TESTIMONIALS -->
+<section class="testimonials-section">
+    <div class="container">
+        <div class="section-header">
+            <h2>Ils ont recruté avec Elliteam</h2>
+            <p>Découvrez les témoignages de nos clients satisfaits</p>
+        </div>
+
+        <div class="testimonials-grid">
+            <div class="testimonial-card">
+                <div class="testimonial-rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <p class="testimonial-text">"Elliteam a transformé notre processus de recrutement. Nous avons réduit notre time-to-hire de 50% et trouvé des profils de qualité exceptionnelle. L'IA de matching est impressionnante !"</p>
+                <div class="testimonial-author">
+                    <img src="https://via.placeholder.com/60x60/1E3A8A/FFFFFF?text=SM" alt="Sophie Martin">
+                    <div>
+                        <strong>Sophie Martin</strong>
+                        <span>DRH, TechCorp</span>
+                    </div>
+                </div>
+                <div class="testimonial-company">
+                    <i class="fas fa-building"></i>
+                    <span>Startup - 50 employés</span>
+                </div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="testimonial-rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <p class="testimonial-text">"La qualité des candidats sur Elliteam est incomparable. Nous avons recruté 5 développeurs en 2 mois, tous parfaitement alignés avec notre culture d'entreprise. Meilleur ROI de nos outils RH !"</p>
+                <div class="testimonial-author">
+                    <img src="https://via.placeholder.com/60x60/DC2626/FFFFFF?text=JD" alt="Jean Dupont">
+                    <div>
+                        <strong>Jean Dupont</strong>
+                        <span>CTO, InnovateTech</span>
+                    </div>
+                </div>
+                <div class="testimonial-company">
+                    <i class="fas fa-rocket"></i>
+                    <span>Scale-up - 200 employés</span>
+                </div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="testimonial-rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <p class="testimonial-text">"Le service client est exceptionnel. Notre Account Manager nous a aidés à optimiser nos annonces et cibler exactement les profils dont nous avions besoin. Résultat : 3 recrutements réussis en un mois !"</p>
+                <div class="testimonial-author">
+                    <img src="https://via.placeholder.com/60x60/1E3A8A/FFFFFF?text=ML" alt="Marie Lefebvre">
+                    <div>
+                        <strong>Marie Lefebvre</strong>
+                        <span>Responsable Recrutement, CloudFirst</span>
+                    </div>
+                </div>
+                <div class="testimonial-company">
+                    <i class="fas fa-cloud"></i>
+                    <span>PME - 150 employés</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- STATS SECTION -->
+<section class="companies-stats">
+    <div class="container">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-icon">
+                    <i class="fas fa-building"></i>
+                </div>
+                <h3>500+</h3>
+                <p>Entreprises actives</p>
+            </div>
+
+            <div class="stat-item">
+                <div class="stat-icon">
+                    <i class="fas fa-briefcase"></i>
+                </div>
+                <h3>10,000+</h3>
+                <p>Offres publiées</p>
+            </div>
+
+            <div class="stat-item">
+                <div class="stat-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <h3>14 jours</h3>
+                <p>Délai moyen de recrutement</p>
+            </div>
+
+            <div class="stat-item">
+                <div class="stat-icon">
+                    <i class="fas fa-percentage"></i>
+                </div>
+                <h3>95%</h3>
+                <p>Taux de satisfaction</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+{#
+<!-- FAQ SECTION -->
+<section class="faq-section">
+    <div class="container">
+        <div class="section-header">
+            <h2>Questions Fréquentes</h2>
+            <p>Tout ce que vous devez savoir sur le recrutement avec Elliteam</p>
+        </div>
+
+        <div class="faq-container">
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3>Combien de temps faut-il pour publier une offre ?</h3>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Vous pouvez créer et publier une offre d'emploi en moins de 5 minutes grâce à notre éditeur intuitif et nos modèles pré-remplis. Une fois publiée, votre offre est immédiatement visible par les candidats et diffusée via notre système de matching IA.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3>Comment fonctionne le matching IA ?</h3>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Notre algorithme d'intelligence artificielle analyse plus de 50 critères incluant les compétences techniques, l'expérience, les préférences de localisation, les attentes salariales et la culture d'entreprise. Il suggère ensuite automatiquement les candidats les plus pertinents pour chaque offre avec un score de compatibilité.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3>Puis-je essayer gratuitement ?</h3>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Oui ! Notre plan Pro inclut 14 jours d'essai gratuit, sans carte bancaire requise. Vous pouvez publier jusqu'à 5 offres et tester toutes les fonctionnalités de la plateforme. Si vous n'êtes pas satisfait, aucun engagement n'est requis.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3>Quels types de profils IT puis-je trouver ?</h3>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Notre base de données comprend tous les métiers IT : développeurs (Full Stack, Front, Back, Mobile), Data Scientists, DevOps, Architectes Cloud, Experts Cybersécurité, Product Managers, UI/UX Designers, Chefs de Projet, SysAdmin et bien d'autres. Tous les niveaux d'expérience sont représentés.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3>Proposez-vous un accompagnement personnalisé ?</h3>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Absolument ! À partir du plan Pro, vous bénéficiez d'un Account Manager dédié qui vous accompagne dans l'optimisation de vos annonces, le sourcing actif de candidats et le suivi de vos recrutements. Nous proposons également des formations à l'utilisation de la plateforme.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3>Comment sont vérifiés les candidats ?</h3>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Tous les profils sur Elliteam sont vérifiés. Nous validons l'identité, les diplômes et les expériences professionnelles. Les candidats peuvent également passer des tests techniques optionnels pour certifier leurs compétences. Nous vérifions également la cohérence des informations fournies.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+#}
+
+<!-- CTA FINAL -->
+<section class="cta-section">
+    <div class="container">
+        <div class="cta-content">
+            <h2>Prêt à recruter vos prochains talents IT ?</h2>
+            <p>Rejoignez les 500+ entreprises qui font confiance à Elliteam pour leurs recrutements tech</p>
+            <div class="cta-buttons">
+                <a href="#register" class="btn-primary-large">
+                    <i class="fas fa-rocket"></i>
+                    Publier une offre gratuitement
+                </a>
+                <a href="#demo" class="btn-secondary-large">
+                    <i class="fas fa-calendar"></i>
+                    Réserver une démo
+                </a>
+            </div>
+            <p class="cta-note">
+                <i class="fas fa-shield-alt"></i>
+                Aucune carte bancaire requise • Essai gratuit 14 jours
+            </p>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/companies.js') }}"></script>
+{% endblock %}
