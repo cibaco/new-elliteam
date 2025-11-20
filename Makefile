@@ -83,5 +83,8 @@ ps: ## Liste tous les conteneurs
 prune: ## Nettoie les volumes et images non utilisés
 	docker system prune -af --volumes
 
+compose-require:
+	docker-compose exec php composer require $(NAME)
+
 stop-mysql:
 	docker sudo service mysql stop

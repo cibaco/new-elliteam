@@ -12,6 +12,8 @@ services:
     volumes:
       - ./:/var/www/symfony:cached
       - ./docker/php/php.ini:/usr/local/etc/php/conf.d/custom.ini
+      - .:/var/www/html
+    working_dir: /var/www/html
     environment:
       - APP_ENV=${APP_ENV:-dev}
       - DATABASE_URL="mysql://elliteam:elliteam@mysql:3306/elliteam?serverVersion=8.0"
