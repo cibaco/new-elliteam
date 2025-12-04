@@ -17,11 +17,11 @@ class CandidatureRepository extends ServiceEntityRepository
     }
 
     /**
-     * Save a Candidature entity
+     * Sauvegarde une candidature
      */
-    public function save(Candidature $candidature, bool $flush = true): void
+    public function save(Candidature $entity, bool $flush = false): void
     {
-        $this->getEntityManager()->persist($candidature);
+        $this->getEntityManager()->persist($entity);
 
         if ($flush) {
             $this->getEntityManager()->flush();
@@ -29,11 +29,11 @@ class CandidatureRepository extends ServiceEntityRepository
     }
 
     /**
-     * Remove a Candidature entity
+     * Supprime une candidature
      */
-    public function remove(Candidature $candidature, bool $flush = true): void
+    public function remove(Candidature $entity, bool $flush = false): void
     {
-        $this->getEntityManager()->remove($candidature);
+        $this->getEntityManager()->remove($entity);
 
         if ($flush) {
             $this->getEntityManager()->flush();
@@ -41,20 +41,20 @@ class CandidatureRepository extends ServiceEntityRepository
     }
 
     /**
-     * Find candidatures by poste recherché
+     * Compte le nombre de candidatures par statut
      */
-    public function findByPoste(string $poste): array
+    public function countByStatut(string $statut): int
     {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.posteRecherche LIKE :poste')
-            ->setParameter('poste', '%' . $poste . '%')
-            ->orderBy('c.createdAt', 'DESC')
+        return (int) $this->createQueryBuilder('c')
+            ->select('COUNT(c.id)')
+            ->andWhere('c.statut = :statut')
+            ->setParameter('statut', $statut)
             ->getQuery()
-            ->getResult();
+            ->getSingleScalarResult();
     }
 
     /**
-     * Find candidatures by statut
+     * Récupère les candidatures par statut
      */
     public function findByStatut(string $statut): array
     {
@@ -67,7 +67,7 @@ class CandidatureRepository extends ServiceEntityRepository
     }
 
     /**
-     * Find candidatures by disponibilité
+     * Récupère les candidatures par disponibilité
      */
     public function findByDisponibilite(string $disponibilite): array
     {
@@ -80,97 +80,168 @@ class CandidatureRepository extends ServiceEntityRepository
     }
 
     /**
-     * Find recent candidatures (last 30 days)
+     * Recherche par nom ou poste
      */
-    public function findRecent(int $limit = 10): array
+    public function searchByNomOrPoste(string $searchTerm): array
     {
-        $dateLimit = new \DateTimeImmutable('-30 days');
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.nomPrenom LIKE :term OR c.posteRecherche LIKE :term')
+            ->setParameter('term', '%' . $searchTerm . '%')
+            ->orderBy('c.createdAt', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * Récupère les candidatures créées dans les dernières 24h
+     */
+    public function findRecentCandidatures(int $hours = 24): array
+    {
+        $date = new \DateTimeImmutable("-{$hours} hours");
 
         return $this->createQueryBuilder('c')
-            ->andWhere('c.createdAt >= :dateLimit')
-            ->setParameter('dateLimit', $dateLimit)
+            ->andWhere('c.createdAt >= :date')
+            ->setParameter('date', $date)
             ->orderBy('c.createdAt', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * Statistiques complètes par statut
+     */
+    public function getStatistics(): array
+    {
+        $results = $this->createQueryBuilder('c')
+            ->select('c.statut, COUNT(c.id) as count')
+            ->groupBy('c.statut')
+            ->getQuery()
+            ->getResult();
+
+        $stats = [
+            'nouvelle' => 0,
+            'en_cours' => 0,
+            'retenue' => 0,
+            'refusee' => 0,
+            'archivee' => 0,
+        ];
+
+        foreach ($results as $result) {
+            $stats[$result['statut']] = (int) $result['count'];
+        }
+
+        return $stats;
+    }
+
+    /**
+     * Statistiques par disponibilité
+     */
+    public function getStatisticsByDisponibilite(): array
+    {
+        $results = $this->createQueryBuilder('c')
+            ->select('c.disponibilite, COUNT(c.id) as count')
+            ->groupBy('c.disponibilite')
+            ->getQuery()
+            ->getResult();
+
+        $stats = [];
+        foreach ($results as $result) {
+            $stats[$result['disponibilite']] = (int) $result['count'];
+        }
+
+        return $stats;
+    }
+
+    /**
+     * Candidatures par poste recherché (top 10)
+     */
+    public function getTopPosteRecherche(int $limit = 10): array
+    {
+        return $this->createQueryBuilder('c')
+            ->select('c.posteRecherche, COUNT(c.id) as count')
+            ->groupBy('c.posteRecherche')
+            ->orderBy('count', 'DESC')
             ->setMaxResults($limit)
             ->getQuery()
             ->getResult();
     }
 
     /**
-     * Search candidatures by keyword in posteRecherche or message
+     * Candidatures récemment modifiées
      */
-    public function searchByKeyword(string $keyword): array
+    public function findRecentlyUpdated(int $limit = 10): array
     {
         return $this->createQueryBuilder('c')
-            ->andWhere('c.posteRecherche LIKE :keyword OR c.message LIKE :keyword')
-            ->setParameter('keyword', '%' . $keyword . '%')
-            ->orderBy('c.createdAt', 'DESC')
+            ->andWhere('c.updatedAt IS NOT NULL')
+            ->orderBy('c.updatedAt', 'DESC')
+            ->setMaxResults($limit)
             ->getQuery()
             ->getResult();
     }
 
     /**
-     * Find candidatures disponibles immédiatement
+     * Compte total de candidatures
      */
-    public function findDisponiblesImmediatement(): array
+    public function countAll(): int
     {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.disponibilite = :disponibilite')
-            ->setParameter('disponibilite', 'immediatement')
-            ->andWhere('c.statut = :statut')
-            ->setParameter('statut', 'nouvelle')
-            ->orderBy('c.createdAt', 'DESC')
-            ->getQuery()
-            ->getResult();
-    }
-
-    /**
-     * Count candidatures by statut
-     */
-    public function countByStatut(string $statut): int
-    {
-        return $this->createQueryBuilder('c')
+        return (int) $this->createQueryBuilder('c')
             ->select('COUNT(c.id)')
-            ->andWhere('c.statut = :statut')
-            ->setParameter('statut', $statut)
             ->getQuery()
             ->getSingleScalarResult();
     }
 
     /**
-     * Get statistics by disponibilité
+     * Candidatures par mois (12 derniers mois)
      */
-    public function getStatisticsByDisponibilite(): array
+    public function getCandidaturesByMonth(): array
     {
-        return $this->createQueryBuilder('c')
-            ->select('c.disponibilite, COUNT(c.id) as total')
-            ->groupBy('c.disponibilite')
-            ->getQuery()
-            ->getResult();
+        $connection = $this->getEntityManager()->getConnection();
+
+        $sql = "
+            SELECT 
+                DATE_FORMAT(created_at, '%Y-%m') as month,
+                COUNT(*) as count
+            FROM candidature
+            WHERE created_at >= DATE_SUB(NOW(), INTERVAL 12 MONTH)
+            GROUP BY month
+            ORDER BY month ASC
+        ";
+
+        return $connection->executeQuery($sql)->fetchAllAssociative();
     }
 
     /**
-     * Find candidatures by email (to avoid duplicates)
+     * Candidatures par statut et mois
      */
-    public function findByEmail(string $email): array
+    public function getCandidaturesByStatusAndMonth(int $months = 6): array
+    {
+        $connection = $this->getEntityManager()->getConnection();
+
+        $sql = "
+            SELECT 
+                DATE_FORMAT(created_at, '%Y-%m') as month,
+                statut,
+                COUNT(*) as count
+            FROM candidature
+            WHERE created_at >= DATE_SUB(NOW(), INTERVAL :months MONTH)
+            GROUP BY month, statut
+            ORDER BY month ASC, statut ASC
+        ";
+
+        return $connection->executeQuery($sql, ['months' => $months])->fetchAllAssociative();
+    }
+
+    /**
+     * Candidatures urgentes (disponibilité immédiate)
+     */
+    public function findUrgentCandidatures(): array
     {
         return $this->createQueryBuilder('c')
-            ->andWhere('c.email = :email')
-            ->setParameter('email', $email)
+            ->andWhere('c.disponibilite = :dispo')
+            ->andWhere('c.statut IN (:statuts)')
+            ->setParameter('dispo', 'immediatement')
+            ->setParameter('statuts', ['nouvelle', 'en_cours'])
             ->orderBy('c.createdAt', 'DESC')
-            ->getQuery()
-            ->getResult();
-    }
-
-    /**
-     * Get top postes recherchés
-     */
-    public function getTopPostesRecherches(int $limit = 5): array
-    {
-        return $this->createQueryBuilder('c')
-            ->select('c.posteRecherche, COUNT(c.id) as total')
-            ->groupBy('c.posteRecherche')
-            ->orderBy('total', 'DESC')
-            ->setMaxResults($limit)
             ->getQuery()
             ->getResult();
     }

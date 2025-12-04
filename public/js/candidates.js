@@ -1,88 +1,118 @@
-// CV file input handling
-const cvInput = document.getElementById('cv');
-const cvFileName = document.getElementById('cvFileName');
-const cvLabel = document.getElementById('cvLabel');
+// candidature-form.js - Version corrigée pour Symfony
 
-cvInput.addEventListener('change', function(e) {
-    if (this.files.length > 0) {
-        const fileName = this.files[0].name;
-        const fileSize = (this.files[0].size / 1024 / 1024).toFixed(2); // Size in MB
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('form[name="candidature"]');
 
-        if (this.files[0].size > 5 * 1024 * 1024) {
-            alert('Le fichier est trop volumineux. La taille maximale est de 5 Mo.');
-            this.value = '';
-            cvFileName.textContent = '';
-            cvLabel.classList.add('required-file');
-            return;
+    if (!form) return;
+
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const cvFileInput = document.querySelector('input[type="file"]');
+
+    // Validation en temps réel du fichier CV
+    if (cvFileInput) {
+        const cvLabel = cvFileInput.closest('.form-group')?.querySelector('label');
+        const cvHelp = cvFileInput.closest('.form-group')?.querySelector('.form-help');
+
+        cvFileInput.addEventListener('change', function(e) {
+            const file = this.files[0];
+
+            if (file) {
+                // Vérifier la taille (5Mo max)
+                const maxSize = 5 * 1024 * 1024; // 5MB en bytes
+                if (file.size > maxSize) {
+                    alert('Le fichier est trop volumineux. Taille maximale : 5Mo');
+                    this.value = '';
+                    return;
+                }
+
+                // Vérifier le type
+                if (file.type !== 'application/pdf') {
+                    alert('Seuls les fichiers PDF sont acceptés');
+                    this.value = '';
+                    return;
+                }
+
+                // Afficher le nom du fichier
+                const fileName = file.name;
+                const fileSize = (file.size / 1024 / 1024).toFixed(2);
+
+                if (cvHelp) {
+                    cvHelp.textContent = `Fichier sélectionné: ${fileName} (${fileSize} Mo)`;
+                    cvHelp.style.color = '#27ae60';
+                }
+
+                if (cvLabel) {
+                    cvLabel.style.color = '#27ae60';
+                }
+            }
+        });
+    }
+
+    // Animation du bouton pendant la soumission
+    form.addEventListener('submit', function(e) {
+        // NE PAS empêcher la soumission par défaut
+        // e.preventDefault(); // ← SUPPRIMER CETTE LIGNE
+
+        // Désactiver le bouton pour éviter les doubles soumissions
+        if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Envoi en cours...';
         }
 
-        cvFileName.textContent = `✓ Fichier sélectionné: ${fileName} (${fileSize} Mo)`;
-        cvFileName.classList.add('success');
-        cvLabel.classList.remove('required-file');
-        cvLabel.style.borderColor = '#27ae60';
-        cvLabel.style.background = '#f0f9f4';
-        cvLabel.style.color = '#27ae60';
-    } else {
-        cvFileName.textContent = '';
-        cvFileName.classList.remove('success');
-        cvLabel.classList.add('required-file');
-        cvLabel.style.borderColor = '';
-        cvLabel.style.background = '';
-        cvLabel.style.color = '';
-    }
-});
+        // Laisser le formulaire se soumettre normalement à Symfony
+        // Le serveur redirigera vers la page de succès
+    });
 
-// Form submission handling
-const form = document.getElementById('candidatureForm');
-const successMessage = document.getElementById('successMessage');
-const formContainer = document.querySelector('.form-container');
+    // Validation du téléphone en temps réel
+    const phoneInput = document.querySelector('input[type="tel"]');
+    if (phoneInput) {
+        phoneInput.addEventListener('blur', function() {
+            const phoneRegex = /^(?:(?:\+|00)33|0)\s*[1-9](?:[\s.-]*\d{2}){4}$/;
+            if (this.value && !phoneRegex.test(this.value)) {
+                this.classList.add('is-invalid');
 
-form.addEventListener('submit', function(e) {
-    e.preventDefault();
-
-    // Validate form
-    if (!form.checkValidity()) {
-        form.reportValidity();
-        return;
+                // Créer un message d'erreur si il n'existe pas
+                let errorMsg = this.parentElement.querySelector('.invalid-feedback');
+                if (!errorMsg) {
+                    errorMsg = document.createElement('div');
+                    errorMsg.className = 'invalid-feedback';
+                    errorMsg.textContent = 'Format de téléphone invalide (ex: 06 12 34 56 78)';
+                    this.parentElement.appendChild(errorMsg);
+                }
+            } else {
+                this.classList.remove('is-invalid');
+            }
+        });
     }
 
-    // Check if CV is uploaded
-    if (!cvInput.files.length) {
-        alert('Veuillez joindre votre CV (obligatoire)');
-        cvInput.focus();
-        return;
+    // Validation de l'email en temps réel
+    const emailInput = document.querySelector('input[type="email"]');
+    if (emailInput) {
+        emailInput.addEventListener('blur', function() {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (this.value && !emailRegex.test(this.value)) {
+                this.classList.add('is-invalid');
+
+                let errorMsg = this.parentElement.querySelector('.invalid-feedback');
+                if (!errorMsg) {
+                    errorMsg = document.createElement('div');
+                    errorMsg.className = 'invalid-feedback';
+                    errorMsg.textContent = 'Format d\'email invalide';
+                    this.parentElement.appendChild(errorMsg);
+                }
+            } else {
+                this.classList.remove('is-invalid');
+            }
+        });
     }
 
-    // Disable submit button
-    const submitBtn = form.querySelector('.submit-btn');
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'Envoi en cours...';
-
-    // Simulate form submission (replace with actual API call)
-    setTimeout(() => {
-        // Hide form
-        formContainer.classList.add('hidden');
-
-        // Show success message
-        successMessage.classList.add('show');
-
-        // Scroll to success message
-        successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
-
-        // Reset form
-        form.reset();
-        cvFileName.textContent = '';
-        cvFileName.classList.remove('success');
-        cvLabel.classList.add('required-file');
-        cvLabel.style.borderColor = '';
-        cvLabel.style.background = '';
-        cvLabel.style.color = '';
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Envoyer ma candidature';
-
-        // Optional: Redirect to home page after 4 seconds
-        setTimeout(() => {
-            // window.location.href = 'elliteam_final.html';
-        }, 4000);
-    }, 1500);
+    // Auto-hide flash messages après 5 secondes
+    const flashMessages = document.querySelectorAll('.flash-message, .alert');
+    flashMessages.forEach(function(message) {
+        setTimeout(function() {
+            message.style.transition = 'opacity 0.5s';
+            message.style.opacity = '0';
+            setTimeout(() => message.remove(), 500);
+        }, 5000);
+    });
 });

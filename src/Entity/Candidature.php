@@ -62,8 +62,7 @@ class Candidature
     )]
     private ?string $disponibilite = null;
 
-    #[ORM\Column(type: Types::STRING, length: 255)]
-    #[Assert\NotBlank(message: "Le CV est obligatoire")]
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     private ?string $cv = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]

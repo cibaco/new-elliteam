@@ -1,3 +1,5 @@
+/* candidates.css - Version Symfony optimisée */
+
 * {
     margin: 0;
     padding: 0;
@@ -33,59 +35,9 @@ body {
     margin-bottom: 15px;
 }
 
-.logo-icon {
-    width: 70px;
-    height: 70px;
-    background: linear-gradient(135deg, #5B9BD5 0%, #4A8BC2 100%);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    box-shadow: 0 4px 15px rgba(91, 155, 213, 0.3);
-}
-
-.logo-icon::before {
-    content: '';
-    position: absolute;
-    top: -6px;
-    left: -18px;
-    width: 50px;
-    height: 3px;
-    background: #5B9BD5;
-    transform: skewY(-10deg);
-}
-
-.logo-icon::after {
-    content: '';
-    position: absolute;
-    top: -6px;
-    right: -18px;
-    width: 50px;
-    height: 3px;
-    background: #5B9BD5;
-    transform: skewY(10deg);
-}
-
-.logo-letter {
-    color: white;
-    font-size: 40px;
-    font-weight: bold;
-    font-style: italic;
-}
-
-.brand-name {
-    font-size: 36px;
-    font-weight: 900;
-    color: #1a1a1a;
-    letter-spacing: 2px;
-    margin: 10px 0 5px;
-}
-
-.tagline {
-    font-size: 18px;
-    color: #333;
-    font-weight: 300;
+.logo-icon img {
+    max-width: 150px;
+    height: auto;
 }
 
 .back-link {
@@ -153,9 +105,15 @@ body {
     margin-left: 5px;
 }
 
+/* Symfony form widgets */
 .form-input,
 .form-select,
-.form-textarea {
+.form-textarea,
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+select,
+textarea {
     width: 100%;
     padding: 14px 16px;
     font-size: 15px;
@@ -168,18 +126,23 @@ body {
 
 .form-input:focus,
 .form-select:focus,
-.form-textarea:focus {
+.form-textarea:focus,
+input:focus,
+select:focus,
+textarea:focus {
     outline: none;
     border-color: #5B9BD5;
     box-shadow: 0 0 0 3px rgba(91, 155, 213, 0.1);
 }
 
-.form-textarea {
+.form-textarea,
+textarea {
     resize: vertical;
     min-height: 120px;
 }
 
-.form-select {
+.form-select,
+select {
     cursor: pointer;
     appearance: none;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
@@ -188,6 +151,7 @@ body {
     padding-right: 40px;
 }
 
+/* File input customization */
 .file-input-wrapper {
     position: relative;
     overflow: hidden;
@@ -226,7 +190,8 @@ body {
     background: #fdeaea;
 }
 
-.file-input {
+.file-input,
+input[type="file"] {
     position: absolute;
     left: -9999px;
 }
@@ -250,13 +215,37 @@ body {
     margin-top: 5px;
 }
 
+/* Symfony form errors */
+.invalid-feedback,
+.form-error-message,
+ul.form-error-list {
+    display: block;
+    color: #e74c3c;
+    font-size: 13px;
+    margin-top: 5px;
+    list-style: none;
+    padding: 0;
+}
+
+.form-error-icon {
+    display: none;
+}
+
+.is-invalid,
+input.is-invalid,
+select.is-invalid,
+textarea.is-invalid {
+    border-color: #e74c3c !important;
+}
+
 /* Submit button */
-.submit-btn {
+.submit-btn,
+button[type="submit"] {
     width: 100%;
     padding: 16px 32px;
     font-size: 18px;
     font-weight: 600;
-    color: white;
+    color: #1e3a5f;
     background: linear-gradient(135deg, #f9d89c 0%, #f7c873 100%);
     border: none;
     border-radius: 12px;
@@ -264,19 +253,21 @@ body {
     transition: all 0.3s ease;
     margin-top: 30px;
     box-shadow: 0 4px 15px rgba(249, 216, 156, 0.4);
-    color: #1e3a5f;
 }
 
-.submit-btn:hover {
+.submit-btn:hover,
+button[type="submit"]:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(249, 216, 156, 0.5);
 }
 
-.submit-btn:active {
+.submit-btn:active,
+button[type="submit"]:active {
     transform: translateY(0);
 }
 
-.submit-btn:disabled {
+.submit-btn:disabled,
+button[type="submit"]:disabled {
     opacity: 0.6;
     cursor: not-allowed;
     transform: none;
@@ -317,6 +308,29 @@ body {
     margin-bottom: 10px;
 }
 
+/* Alert messages (Symfony flash) */
+.alert {
+    padding: 15px 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    font-size: 15px;
+}
+
+.alert-success {
+    background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+    color: white;
+}
+
+.alert-danger {
+    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+    color: white;
+}
+
+.alert-warning {
+    background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+    color: white;
+}
+
 /* Footer */
 .footer {
     margin-top: 50px;
@@ -341,14 +355,34 @@ body {
     display: none;
 }
 
+/* Spinner for loading state */
+.spinner-border {
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
+    vertical-align: text-bottom;
+    border: 0.15em solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    animation: spinner-border 0.75s linear infinite;
+}
+
+@keyframes spinner-border {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.spinner-border-sm {
+    width: 0.875rem;
+    height: 0.875rem;
+    border-width: 0.1em;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .container {
         padding: 25px;
-    }
-
-    .brand-name {
-        font-size: 28px;
     }
 
     .page-title {
@@ -364,7 +398,8 @@ body {
         gap: 0;
     }
 
-    .submit-btn {
+    .submit-btn,
+    button[type="submit"] {
         font-size: 16px;
         padding: 14px 28px;
     }

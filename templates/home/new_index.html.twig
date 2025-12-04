@@ -6,11 +6,17 @@
         Recrutement CDI et missions en prestation pour vos projets digitaux.
         Choisissez votre besoin en un clic :
     </p>
+    {# Affichage des messages flash #}
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
 
     <!-- CTA Buttons -->
     <div class="cta-buttons">
         <button class="btn btn-primary">
-            <a href="{{ path('app_companie_index') }}">Je dépose une offre<br>(CDI / mission)</a>
+            <a href="{{ path('app_company_offer') }}">Je dépose une offre<br>(CDI / mission)</a>
         </button>
         <button class="btn btn-secondary">
             <a href="{{ path('app_candidate_index') }}">Je dépose ma<br>candidature / CV</a>

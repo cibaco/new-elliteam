@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nouvelle candidature reçue</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .email-container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px 10px 0 0;
+            margin: -30px -30px 20px -30px;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 1.8em;
+        }
+        .badge {
+            display: inline-block;
+            padding: 5px 15px;
+            background-color: #27ae60;
+            color: white;
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+        .candidate-info {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .info-item {
+            padding: 10px;
+            background-color: white;
+            border-radius: 5px;
+            border-left: 3px solid #3498db;
+        }
+        .info-label {
+            font-weight: bold;
+            color: #7f8c8d;
+            font-size: 0.9em;
+            display: block;
+            margin-bottom: 5px;
+        }
+        .info-value {
+            color: #2c3e50;
+            font-size: 1.1em;
+        }
+        .message-box {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .message-box h3 {
+            margin-top: 0;
+            color: #856404;
+        }
+        .action-buttons {
+            text-align: center;
+            margin: 30px 0;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            margin: 5px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            color: white;
+        }
+        .btn-primary {
+            background-color: #3498db;
+        }
+        .btn-success {
+            background-color: #27ae60;
+        }
+        .cv-info {
+            background-color: #e8f5e9;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            text-align: center;
+        }
+        .cv-info i {
+            font-size: 2em;
+            color: #27ae60;
+        }
+        .footer {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 2px solid #ecf0f1;
+            color: #7f8c8d;
+            font-size: 0.9em;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+<div class="email-container">
+    <div class="header">
+        <h1>🎯 Nouvelle Candidature <span class="badge">{{ candidature.posteRecherche }}</span></h1>
+        <p style="margin: 10px 0 0 0; opacity: 0.9;">Reçue le {{ candidature.createdAt|date('d/m/Y à H:i') }}</p>
+    </div>
+
+    <div class="candidate-info">
+        <h2 style="margin-top: 0; color: #2c3e50;">👤 Informations du candidat</h2>
+
+        <div class="info-grid">
+            <div class="info-item">
+                <span class="info-label">Nom et Prénom</span>
+                <span class="info-value">{{ candidature.nomPrenom }}</span>
+            </div>
+
+            <div class="info-item">
+                <span class="info-label">Email</span>
+                <span class="info-value">
+                        <a href="mailto:{{ candidature.email }}">{{ candidature.email }}</a>
+                    </span>
+            </div>
+
+            <div class="info-item">
+                <span class="info-label">Téléphone</span>
+                <span class="info-value">
+                        <a href="tel:{{ candidature.telephone }}">{{ candidature.telephone }}</a>
+                    </span>
+            </div>
+
+            <div class="info-item">
+                <span class="info-label">Poste recherché</span>
+                <span class="info-value">{{ candidature.posteRecherche }}</span>
+            </div>
+
+            <div class="info-item">
+                <span class="info-label">Prétention salariale</span>
+                <span class="info-value">{{ candidature.pretentionSalariale }}</span>
+            </div>
+
+            <div class="info-item">
+                <span class="info-label">Disponibilité</span>
+                <span class="info-value">{{ candidature.disponibiliteLabel }}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="cv-info">
+        <p style="margin: 10px 0;">
+            <strong>📄 CV téléchargé :</strong> {{ candidature.cv }}
+        </p>
+        <p style="font-size: 0.9em; color: #7f8c8d; margin: 5px 0;">
+            Le CV est disponible dans le répertoire : <code>uploads/cv/</code>
+        </p>
+    </div>
+
+    {% if candidature.message %}
+        <div class="message-box">
+            <h3>💬 Message du candidat</h3>
+            <p style="white-space: pre-wrap; margin: 10px 0;">{{ candidature.message }}</p>
+        </div>
+    {% endif %}
+
+   {# <div class="action-buttons">
+        <a href="{{ url('app_admin_candidature_show', {id: candidature.id}) }}" class="btn btn-primary">
+            👁️ Voir la candidature complète
+        </a>
+        <a href="{{ url('app_admin_candidatures') }}" class="btn btn-success">
+            📋 Voir toutes les candidatures
+        </a>
+    </div>#}
+
+    <div style="background-color: #e3f2fd; padding: 15px; border-radius: 5px; margin: 20px 0;">
+        <p style="margin: 0; color: #1976d2;">
+            <strong>ℹ️ Action requise :</strong>
+            N'oubliez pas de mettre à jour le statut de cette candidature dans votre tableau de bord.
+        </p>
+    </div>
+
+    <div class="footer">
+        <p>
+            Cet email a été généré automatiquement par le système de gestion des candidatures.<br>
+            Pour gérer cette candidature, connectez-vous à votre espace administrateur.
+        </p>
+        <p>© {{ "now"|date("Y") }} Votre Entreprise - Système RH</p>
+    </div>
+</div>
+</body>
+</html>

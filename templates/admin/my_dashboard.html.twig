@@ -1,0 +1,209 @@
+{% extends '@EasyAdmin/page/content.html.twig' %}
+
+{% block page_title %}
+    <h1 class="title">
+        <i class="fa fa-tachometer-alt"></i> Dashboard - Gestion des Offres
+    </h1>
+{% endblock %}
+
+{% block main %}
+    <div class="dashboard-content">
+        {# Statistiques en cartes #}
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="card border-warning">
+                    <div class="card-body text-center">
+                        <i class="fa fa-clock fa-3x text-warning mb-3"></i>
+                        <h2 class="display-4">{{ pending_count }}</h2>
+                        <p class="text-muted">En attente</p>
+                        <a href="{{ ea_url().setController('App\\Controller\\Admin\\CompanyOfferCrudController').setAction('index').set('filters[status][value]', 'pending') }}"
+                           class="btn btn-warning btn-sm">
+                            Voir les offres
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card border-primary">
+                    <div class="card-body text-center">
+                        <i class="fa fa-spinner fa-3x text-primary mb-3"></i>
+                        <h2 class="display-4">{{ processing_count }}</h2>
+                        <p class="text-muted">En cours</p>
+                        <a href="{{ ea_url().setController('App\\Controller\\Admin\\CompanyOfferCrudController').setAction('index').set('filters[status][value]', 'processing') }}"
+                           class="btn btn-primary btn-sm">
+                            Voir les offres
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card border-success">
+                    <div class="card-body text-center">
+                        <i class="fa fa-check-circle fa-3x text-success mb-3"></i>
+                        <h2 class="display-4">{{ completed_count }}</h2>
+                        <p class="text-muted">Terminées</p>
+                        <a href="{{ ea_url().setController('App\\Controller\\Admin\\CompanyOfferCrudController').setAction('index').set('filters[status][value]', 'completed') }}"
+                           class="btn btn-success btn-sm">
+                            Voir les offres
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card border-danger">
+                    <div class="card-body text-center">
+                        <i class="fa fa-times-circle fa-3x text-danger mb-3"></i>
+                        <h2 class="display-4">{{ rejected_count }}</h2>
+                        <p class="text-muted">Rejetées</p>
+                        <a href="{{ ea_url().setController('App\\Controller\\Admin\\CompanyOfferCrudController').setAction('index').set('filters[status][value]', 'rejected') }}"
+                           class="btn btn-danger btn-sm">
+                            Voir les offres
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {# Offres récentes #}
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">
+                            <i class="fa fa-history"></i> Dernières offres reçues
+                        </h5>
+                    </div>
+                    <div class="card-body p-0">
+                        {% if recent_offers is empty %}
+                            <div class="text-center p-4">
+                                <p class="text-muted">Aucune offre pour le moment</p>
+                            </div>
+                        {% else %}
+                            <div class="table-responsive">
+                                <table class="table table-hover mb-0">
+                                    <thead class="table-light">
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Entreprise</th>
+                                        <th>Contact</th>
+                                        <th>Type</th>
+                                        <th>Poste</th>
+                                        <th>Statut</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for offer in recent_offers %}
+                                        <tr>
+                                            <td>
+                                                <small>{{ offer.createdAt|date('d/m/Y H:i') }}</small>
+                                            </td>
+                                            <td>
+                                                <strong>{{ offer.company }}</strong>
+                                            </td>
+                                            <td>
+                                                {{ offer.name }}<br>
+                                                <small class="text-muted">
+                                                    <i class="fa fa-envelope"></i> {{ offer.email }}
+                                                </small>
+                                            </td>
+                                            <td>
+                                                {% if offer.needType == 'cdi' %}
+                                                    <span class="badge bg-success">CDI</span>
+                                                {% else %}
+                                                    <span class="badge bg-info">Prestation</span>
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                {# Version sans le filtre u - fonctionne sans twig/string-extra #}
+                                                {% if offer.position|length > 30 %}
+                                                    {{ offer.position|slice(0, 30) }}...
+                                                {% else %}
+                                                    {{ offer.position }}
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                {% if offer.status == 'pending' %}
+                                                    <span class="badge bg-warning">En attente</span>
+                                                {% elseif offer.status == 'processing' %}
+                                                    <span class="badge bg-primary">En cours</span>
+                                                {% elseif offer.status == 'completed' %}
+                                                    <span class="badge bg-success">Terminée</span>
+                                                {% else %}
+                                                    <span class="badge bg-danger">Rejetée</span>
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                <a href="{{ ea_url().setController('App\\Controller\\Admin\\CompanyOfferCrudController').setAction('detail').setEntityId(offer.id) }}"
+                                                   class="btn btn-sm btn-primary"
+                                                   title="Voir les détails">
+                                                    <i class="fa fa-eye"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="card-footer text-end">
+                        <a href="{{ ea_url().setController('App\\Controller\\Admin\\CompanyOfferCrudController').setAction('index') }}"
+                           class="btn btn-primary">
+                            Voir toutes les offres <i class="fa fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {# Actions rapides #}
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">
+                            <i class="fa fa-bolt"></i> Actions rapides
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex gap-2 flex-wrap">
+                            <a href="{{ ea_url().setController('App\\Controller\\Admin\\CompanyOfferCrudController').setAction('index').set('filters[status][value]', 'pending') }}"
+                               class="btn btn-warning">
+                                <i class="fa fa-clock"></i> Traiter les offres en attente
+                            </a>
+                            <a href="{{ ea_url().setController('App\\Controller\\Admin\\CompanyOfferCrudController').setAction('index') }}"
+                               class="btn btn-primary">
+                                <i class="fa fa-list"></i> Voir toutes les offres
+                            </a>
+                            <a href="{{ path('app_home') }}"
+                               class="btn btn-secondary">
+                                <i class="fa fa-arrow-left"></i> Retour au site
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .dashboard-content {
+            padding: 20px;
+        }
+        .card {
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .display-4 {
+            font-size: 3rem;
+            font-weight: 300;
+        }
+        .gap-2 {
+            gap: 0.5rem !important;
+        }
+    </style>
+{% endblock %}

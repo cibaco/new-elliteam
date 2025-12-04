@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmation de votre candidature</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .email-container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #3498db;
+        }
+        .header h1 {
+            color: #2c3e50;
+            margin: 0;
+        }
+        .content {
+            padding: 20px 0;
+        }
+        .success-badge {
+            background-color: #27ae60;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            display: inline-block;
+            margin: 20px 0;
+        }
+        .info-box {
+            background-color: #ecf0f1;
+            padding: 15px;
+            border-left: 4px solid #3498db;
+            margin: 20px 0;
+        }
+        .info-box h3 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+        .details-table {
+            width: 100%;
+            margin: 20px 0;
+            border-collapse: collapse;
+        }
+        .details-table td {
+            padding: 10px;
+            border-bottom: 1px solid #ecf0f1;
+        }
+        .details-table td:first-child {
+            font-weight: bold;
+            color: #7f8c8d;
+            width: 40%;
+        }
+        .footer {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 2px solid #ecf0f1;
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+<div class="email-container">
+    <div class="header">
+        <h1>Confirmation de réception</h1>
+    </div>
+
+    <div class="content">
+        <div class="success-badge">
+            ✓ Candidature bien reçue
+        </div>
+
+        <p>Bonjour <strong>{{ candidature.nomPrenom }}</strong>,</p>
+
+        <p>
+            Nous avons bien reçu votre candidature pour le poste de
+            <strong>{{ candidature.posteRecherche }}</strong> et nous vous en remercions.
+        </p>
+
+        <div class="info-box">
+            <h3>Récapitulatif de votre candidature</h3>
+            <table class="details-table">
+                <tr>
+                    <td>Nom et Prénom :</td>
+                    <td>{{ candidature.nomPrenom }}</td>
+                </tr>
+                <tr>
+                    <td>Email :</td>
+                    <td>{{ candidature.email }}</td>
+                </tr>
+                <tr>
+                    <td>Téléphone :</td>
+                    <td>{{ candidature.telephone }}</td>
+                </tr>
+                <tr>
+                    <td>Poste recherché :</td>
+                    <td>{{ candidature.posteRecherche }}</td>
+                </tr>
+                <tr>
+                    <td>Disponibilité :</td>
+                    <td>{{ candidature.disponibiliteLabel }}</td>
+                </tr>
+                <tr>
+                    <td>Date de candidature :</td>
+                    <td>{{ candidature.createdAt|date('d/m/Y à H:i') }}</td>
+                </tr>
+            </table>
+        </div>
+
+        <p>
+            Notre équipe de recrutement va étudier attentivement votre profil.
+            Si celui-ci correspond à nos besoins actuels, nous vous contacterons
+            dans les <strong>5 à 7 jours ouvrés</strong> pour convenir d'un entretien.
+        </p>
+
+        <div class="info-box">
+            <h3>Prochaines étapes</h3>
+            <ul>
+                <li>Examen de votre candidature par notre équipe RH</li>
+                <li>Présélection des candidats</li>
+                <li>Prise de contact pour un premier entretien</li>
+                <li>Processus de recrutement (si sélectionné)</li>
+            </ul>
+        </div>
+
+        <p>
+            <em>
+                Si vous ne recevez pas de réponse dans les délais indiqués,
+                cela signifie malheureusement que votre profil n'a pas été retenu
+                pour ce poste. Néanmoins, nous conservons votre candidature et
+                pourrons vous recontacter pour d'autres opportunités.
+            </em>
+        </p>
+
+        <p>Cordialement,<br>
+            <strong>L'équipe RH</strong></p>
+    </div>
+
+    <div class="footer">
+        <p>
+            Cet email est automatique, merci de ne pas y répondre.<br>
+            Pour toute question, contactez-nous à : <a href="mailto:rh@votre-entreprise.com">rh@votre-entreprise.com</a>
+        </p>
+        <p>© {{ "now"|date("Y") }} Votre Entreprise - Tous droits réservés</p>
+    </div>
+</div>
+</body>
+</html>
