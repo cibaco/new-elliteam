@@ -8,269 +8,209 @@
 {% endblock %}
 
 {% block main %}
-    <main>
-        <a href="{{ path('app_home') }}" class="back-link">Retour à l'accueil</a>
+    <a href="{{ path('app_home') }}" class="back-link">Retour à l'accueil</a>
 
-        <h2 class="page-title">Je dépose ma candidature</h2>
-        <p class="page-subtitle">
-            Partagez votre profil et vos envies avec nous. Nous sommes impatients de découvrir votre talent !
+    <!-- ── Header ── -->
+    <div class="candidate-header">
+        <span class="candidate-header__badge">Candidats</span>
+        <h2>Je dépose ma candidature</h2>
+        <p>Partagez votre profil et vos envies avec nous.<br>Nous sommes impatients de découvrir votre talent !</p>
+        <div class="candidate-header__badges">
+            <span class="candidate-badge">🎯 CDI & Prestation</span>
+            <span class="candidate-badge">🔒 Données confidentielles</span>
+            <span class="candidate-badge">⚡ Réponse rapide</span>
+        </div>
+    </div>
+
+    {% for message in app.flashes('error') %}
+        <div class="alert alert-danger" role="alert">{{ message }}</div>
+    {% endfor %}
+
+    <!-- ── Formulaire ── -->
+    <div id="formContainer">
+        {{ form_start(form, {'attr': {'id': 'candidatureForm', 'novalidate': 'novalidate'}}) }}
+
+            <!-- Section 1 : Vos informations -->
+            <div class="form-section">
+                <div class="form-section__title">
+                    <span class="form-section__number form-section__number--yellow">1</span>
+                    Vos informations
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.nomPrenom.vars.id }}" class="form-label">
+                        Nom / Prénom<span class="required">*</span>
+                    </label>
+                    {{ form_widget(form.nomPrenom, {'attr': {'class': 'form-input', 'placeholder': 'Votre nom et prénom'}}) }}
+                    {{ form_errors(form.nomPrenom) }}
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="{{ form.email.vars.id }}" class="form-label">
+                            Email<span class="required">*</span>
+                        </label>
+                        {{ form_widget(form.email, {'attr': {'class': 'form-input', 'placeholder': 'votre.email@exemple.com'}}) }}
+                        {{ form_errors(form.email) }}
+                    </div>
+                    <div class="form-group">
+                        <label for="{{ form.telephone.vars.id }}" class="form-label">
+                            Téléphone<span class="required">*</span>
+                        </label>
+                        {{ form_widget(form.telephone, {'attr': {'class': 'form-input', 'placeholder': '06 12 34 56 78'}}) }}
+                        {{ form_errors(form.telephone) }}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 2 : Votre profil -->
+            <div class="form-section">
+                <div class="form-section__title">
+                    <span class="form-section__number form-section__number--yellow">2</span>
+                    Votre profil
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.posteRecherche.vars.id }}" class="form-label">
+                        Poste recherché<span class="required">*</span>
+                    </label>
+                    {{ form_widget(form.posteRecherche, {'attr': {'class': 'form-input', 'placeholder': 'Ex: Développeur Web, Designer UI/UX, Chef de projet...'}}) }}
+                    {{ form_errors(form.posteRecherche) }}
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="{{ form.pretentionSalariale.vars.id }}" class="form-label">
+                            Prétention salariale<span class="required">*</span>
+                        </label>
+                        {{ form_widget(form.pretentionSalariale, {'attr': {'class': 'form-input', 'placeholder': 'Ex: 45K€, À négocier...'}}) }}
+                        <p class="help-text">Indiquez votre fourchette ou "À négocier"</p>
+                        {{ form_errors(form.pretentionSalariale) }}
+                    </div>
+                    <div class="form-group">
+                        <label for="{{ form.disponibilite.vars.id }}" class="form-label">
+                            Disponibilité<span class="required">*</span>
+                        </label>
+                        {{ form_widget(form.disponibilite, {'attr': {'class': 'form-select'}}) }}
+                        {{ form_errors(form.disponibilite) }}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 3 : Documents & message -->
+            <div class="form-section">
+                <div class="form-section__title">
+                    <span class="form-section__number form-section__number--yellow">3</span>
+                    Documents & message
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.cvFile.vars.id }}" class="form-label">
+                        CV<span class="required">*</span>
+                    </label>
+                    <div class="file-input-wrapper">
+                        <label for="{{ form.cvFile.vars.id }}" class="file-input-label required-file" id="cvLabel">
+                            <span class="file-input-icon">📄</span>
+                            <span>Joindre votre CV (PDF uniquement — max 5 Mo) — Obligatoire</span>
+                        </label>
+                        {{ form_widget(form.cvFile, {'attr': {'class': 'file-input', 'accept': '.pdf'}}) }}
+                    </div>
+                    <div id="cvFileName" class="file-name"></div>
+                    {{ form_errors(form.cvFile) }}
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.message.vars.id }}" class="form-label">
+                        Message / Présentation rapide
+                        <span class="optional">(optionnel)</span>
+                    </label>
+                    {{ form_widget(form.message, {'attr': {'class': 'form-textarea', 'placeholder': 'Parlez-nous de vous, de votre parcours, de vos motivations...'}}) }}
+                    {{ form_errors(form.message) }}
+                </div>
+            </div>
+
+            {{ form_widget(form.submit, {'attr': {'class': 'submit-btn', 'id': 'submitBtn'}, 'label': 'Envoyer ma candidature →'}) }}
+
+        {{ form_end(form) }}
+    </div>
+
+    <!-- ── Message de succès ── -->
+    <div id="successMessage" class="success-message" style="display:none;">
+        <div class="success-icon">✓</div>
+        <p>Merci, votre candidature a bien été reçue.</p>
+        <p style="font-size:16px; margin-top:10px; font-weight:400;">
+            Nous examinerons votre profil avec attention et reviendrons vers vous très prochainement.
         </p>
-
-        {# Messages Flash de Symfony #}
-        {% for message in app.flashes('success') %}
-            <div class="success-message show" role="alert">
-                <div class="success-icon">✓</div>
-                <p>{{ message }}</p>
-            </div>
-        {% endfor %}
-
-        {% for message in app.flashes('error') %}
-            <div class="alert alert-danger" role="alert">
-                {{ message }}
-            </div>
-        {% endfor %}
-
-        {# Formulaire Symfony avec le design du fichier candidates.css #}
-        <div class="form-container" id="formContainer">
-            {{ form_start(form, {'attr': {'id': 'candidatureForm', 'novalidate': 'novalidate'}}) }}
-
-            {# Nom et Prénom #}
-            <div class="form-group">
-                <label for="{{ form.nomPrenom.vars.id }}" class="form-label">
-                    Nom / Prénom<span class="required">*</span>
-                </label>
-                {{ form_widget(form.nomPrenom, {
-                    'attr': {
-                        'class': 'form-input',
-                        'placeholder': 'Votre nom et prénom'
-                    }
-                }) }}
-                {{ form_errors(form.nomPrenom) }}
-            </div>
-
-            {# Email et Téléphone #}
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="{{ form.email.vars.id }}" class="form-label">
-                        Email<span class="required">*</span>
-                    </label>
-                    {{ form_widget(form.email, {
-                        'attr': {
-                            'class': 'form-input',
-                            'placeholder': 'votre.email@exemple.com'
-                        }
-                    }) }}
-                    {{ form_errors(form.email) }}
-                </div>
-
-                <div class="form-group">
-                    <label for="{{ form.telephone.vars.id }}" class="form-label">
-                        Téléphone<span class="required">*</span>
-                    </label>
-                    {{ form_widget(form.telephone, {
-                        'attr': {
-                            'class': 'form-input',
-                            'placeholder': '06 12 34 56 78'
-                        }
-                    }) }}
-                    {{ form_errors(form.telephone) }}
-                </div>
-            </div>
-
-            {# Poste recherché #}
-            <div class="form-group">
-                <label for="{{ form.posteRecherche.vars.id }}" class="form-label">
-                    Poste recherché<span class="required">*</span>
-                </label>
-                {{ form_widget(form.posteRecherche, {
-                    'attr': {
-                        'class': 'form-input',
-                        'placeholder': 'Ex: Développeur Web, Designer UI/UX, Chef de projet...'
-                    }
-                }) }}
-                {{ form_errors(form.posteRecherche) }}
-            </div>
-
-            {# Prétention salariale et Disponibilité #}
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="{{ form.pretentionSalariale.vars.id }}" class="form-label">
-                        Prétention salariale<span class="required">*</span>
-                    </label>
-                    {{ form_widget(form.pretentionSalariale, {
-                        'attr': {
-                            'class': 'form-input',
-                            'placeholder': 'Ex: 45K€, À négocier...'
-                        }
-                    }) }}
-                    <p class="help-text">Indiquez votre fourchette ou "À négocier"</p>
-                    {{ form_errors(form.pretentionSalariale) }}
-                </div>
-
-                <div class="form-group">
-                    <label for="{{ form.disponibilite.vars.id }}" class="form-label">
-                        Disponibilité<span class="required">*</span>
-                    </label>
-                    {{ form_widget(form.disponibilite, {
-                        'attr': {
-                            'class': 'form-select'
-                        }
-                    }) }}
-                    {{ form_errors(form.disponibilite) }}
-                </div>
-            </div>
-
-            {# CV Upload #}
-            <div class="form-group">
-                <label for="{{ form.cvFile.vars.id }}" class="form-label">
-                    CV<span class="required">*</span>
-                </label>
-                <div class="file-input-wrapper">
-                    <label for="{{ form.cvFile.vars.id }}" class="file-input-label required-file" id="cvLabel">
-                        <span>📄</span>
-                        <span>Joindre votre CV (PDF uniquement, max 5 Mo) - Obligatoire</span>
-                    </label>
-                    {{ form_widget(form.cvFile, {
-                        'attr': {
-                            'class': 'file-input',
-                            'accept': '.pdf'
-                        }
-                    }) }}
-                </div>
-                <div id="cvFileName" class="file-name"></div>
-                {{ form_errors(form.cvFile) }}
-            </div>
-
-            {# Message optionnel #}
-            <div class="form-group">
-                <label for="{{ form.message.vars.id }}" class="form-label">
-                    Message / Présentation rapide
-                    <span class="optional">(optionnel)</span>
-                </label>
-                {{ form_widget(form.message, {
-                    'attr': {
-                        'class': 'form-textarea',
-                        'placeholder': 'Parlez-nous de vous, de votre parcours, de vos motivations...'
-                    }
-                }) }}
-                {{ form_errors(form.message) }}
-            </div>
-
-            {# Bouton de soumission #}
-            {{ form_widget(form.submit, {
-                'attr': {
-                    'class': 'submit-btn'
-                },
-                'label': 'Envoyer ma candidature'
-            }) }}
-
-            {{ form_end(form) }}
-        </div>
-
-        {# Message de succès (affiché après redirection ou via JavaScript) #}
-        <div id="successMessage" class="success-message">
-            <div class="success-icon">✓</div>
-            <p>Merci, votre candidature a bien été reçue.</p>
-            <p style="font-size: 16px; margin-top: 10px; font-weight: 400;">
-                Nous examinerons votre profil avec attention et reviendrons vers vous très prochainement.
-            </p>
-        </div>
-    </main>
+        <a href="{{ path('app_home') }}" class="success-link">Retour à l'accueil</a>
+    </div>
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const form = document.getElementById('candidatureForm');
-            const submitBtn = form.querySelector('.submit-btn');
-            const cvFileInput = document.getElementById('{{ form.cvFile.vars.id }}');
-            const cvLabel = document.getElementById('cvLabel');
+        document.addEventListener('DOMContentLoaded', function () {
+            const form      = document.getElementById('candidatureForm');
+            const submitBtn = document.getElementById('submitBtn');
+            const cvInput   = document.getElementById('{{ form.cvFile.vars.id }}');
+            const cvLabel   = document.getElementById('cvLabel');
             const cvFileName = document.getElementById('cvFileName');
-            const formContainer = document.getElementById('formContainer');
-            const successMessage = document.getElementById('successMessage');
 
-            // Gestion de l'upload du fichier CV
-            if (cvFileInput) {
-                cvFileInput.addEventListener('change', function(e) {
+            // ── Validation et aperçu du CV ──
+            if (cvInput) {
+                cvInput.addEventListener('change', function () {
                     const file = this.files[0];
-
-                    if (file) {
-                        // Vérifier la taille (5Mo max)
-                        const maxSize = 5 * 1024 * 1024; // 5MB
-                        if (file.size > maxSize) {
-                            alert('Le fichier est trop volumineux. Taille maximale : 5Mo');
-                            this.value = '';
-                            cvFileName.textContent = '';
-                            cvLabel.classList.add('required-file');
-                            return;
-                        }
-
-                        // Vérifier le type (PDF uniquement)
-                        if (file.type !== 'application/pdf') {
-                            alert('Seuls les fichiers PDF sont acceptés');
-                            this.value = '';
-                            cvFileName.textContent = '';
-                            cvLabel.classList.add('required-file');
-                            return;
-                        }
-
-                        // Afficher le nom du fichier
-                        const fileSize = (file.size / 1024 / 1024).toFixed(2);
-                        cvFileName.textContent = `✓ ${file.name} (${fileSize} Mo)`;
-                        cvFileName.classList.add('success');
-
-                        // Changer le style du label
-                        cvLabel.classList.remove('required-file');
-                        cvLabel.style.borderColor = '#27ae60';
-                        cvLabel.style.background = '#e8f5e9';
-                        cvLabel.style.color = '#27ae60';
-                    } else {
+                    if (!file) {
                         cvFileName.textContent = '';
-                        cvFileName.classList.remove('success');
                         cvLabel.classList.add('required-file');
-                        cvLabel.style.borderColor = '';
-                        cvLabel.style.background = '';
-                        cvLabel.style.color = '';
+                        cvLabel.style.cssText = '';
+                        return;
                     }
+                    if (file.size > 5 * 1024 * 1024) {
+                        alert('Le fichier est trop volumineux. Taille maximale : 5 Mo');
+                        this.value = '';
+                        cvFileName.textContent = '';
+                        cvLabel.classList.add('required-file');
+                        return;
+                    }
+                    if (file.type !== 'application/pdf') {
+                        alert('Seuls les fichiers PDF sont acceptés');
+                        this.value = '';
+                        cvFileName.textContent = '';
+                        cvLabel.classList.add('required-file');
+                        return;
+                    }
+                    const size = (file.size / 1024 / 1024).toFixed(2);
+                    cvFileName.textContent = '✓ ' + file.name + ' (' + size + ' Mo)';
+                    cvFileName.classList.add('success');
+                    cvLabel.classList.remove('required-file');
+                    cvLabel.style.borderColor = '#27ae60';
+                    cvLabel.style.background  = '#f0faf4';
+                    cvLabel.style.color       = '#27ae60';
                 });
             }
 
-            // Gestion de la soumission du formulaire
-            form.addEventListener('submit', function(e) {
-                // Ne pas empêcher la soumission par défaut
-                // Le formulaire doit se soumettre à Symfony
+            // ── Désactivation à la soumission ──
+            if (form) {
+                form.addEventListener('submit', function () {
+                    submitBtn.disabled    = true;
+                    submitBtn.value       = 'Envoi en cours…';
+                });
+            }
 
-                // Désactiver le bouton pour éviter les doubles soumissions
-                submitBtn.disabled = true;
-                submitBtn.textContent = 'Envoi en cours...';
-
-                // Note: Symfony gère la validation, l'upload, et la redirection
-                // Si erreurs de validation, Symfony réaffiche le formulaire
-            });
-
-            // Validation du téléphone en temps réel
+            // ── Validation téléphone ──
             const phoneInput = document.querySelector('input[type="tel"]');
             if (phoneInput) {
-                phoneInput.addEventListener('blur', function() {
-                    const phoneRegex = /^(?:(?:\+|00)33|0)\s*[1-9](?:[\s.-]*\d{2}){4}$/;
-                    if (this.value && !phoneRegex.test(this.value)) {
-                        this.style.borderColor = '#e74c3c';
-                    } else {
-                        this.style.borderColor = '';
-                    }
+                phoneInput.addEventListener('blur', function () {
+                    const regex = /^(?:(?:\+|00)33|0)\s*[1-9](?:[\s.-]*\d{2}){4}$/;
+                    this.style.borderColor = (this.value && !regex.test(this.value)) ? '#e74c3c' : '';
                 });
             }
 
-            // Auto-hide des messages flash après 5 secondes
-            const flashMessages = document.querySelectorAll('.success-message.show');
-            flashMessages.forEach(function(message) {
-                setTimeout(function() {
-                    message.style.transition = 'opacity 0.5s';
-                    message.style.opacity = '0';
-                    setTimeout(() => message.remove(), 500);
-                }, 5000);
-            });
+            // ── Affichage du succès si flash présent ──
+            {% if app.flashes('success')|length > 0 %}
+                document.getElementById('formContainer').style.display    = 'none';
+                document.getElementById('successMessage').style.display   = 'block';
+            {% endif %}
         });
     </script>
 {% endblock %}

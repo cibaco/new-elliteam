@@ -1,128 +1,184 @@
 {% extends 'new_base.html.twig' %}
 
 {% block title %}Elliteam - Je dépose une offre{% endblock %}
+
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('css/new_style.css') }}">
-    <link rel="stylesheet"  href="{{ asset('css/companies.css') }}">
-{% endblock stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/companies.css') }}">
+{% endblock %}
 
 {% block main %}
-    <!-- Main content -->
-    <h2 class="page-title">Je dépose une offre</h2>
-    <p class="page-subtitle">
-        Remplissez le formulaire ci-dessous pour nous confier votre besoin en recrutement CDI ou en prestation.
-    </p>
+    <a href="{{ path('app_home') }}" class="back-link">Retour à l'accueil</a>
+
+    <!-- ── Header ── -->
+    <div class="offer-header">
+        <span class="offer-header__badge">Entreprises</span>
+        <h2>Je dépose une offre</h2>
+        <p>Confiez-nous votre besoin en recrutement CDI ou en prestation digitale.<br>Nous revenons vers vous sous 24h.</p>
+        <div class="offer-header__badges">
+            <span class="offer-badge">💼 CDI</span>
+            <span class="offer-badge">🚀 Prestation</span>
+            <span class="offer-badge">⚡ Réponse sous 24h</span>
+        </div>
+    </div>
 
     {% for message in app.flashes('error') %}
-        <div class="alert alert-error">
-            {{ message }}
-        </div>
+        <div class="alert alert-error" role="alert">{{ message }}</div>
     {% endfor %}
 
-    <!-- Form -->
-    {{ form_start(form, {
-        'attr': {
-            'id': 'offerForm',
-            'class': 'form-container'
-        }
-    }) }}
+    <!-- ── Formulaire ── -->
+    <div id="formContainer">
+        {{ form_start(form, {'attr': {'id': 'offerForm', 'class': 'offer-form', 'novalidate': 'novalidate'}}) }}
 
-    <div class="form-group">
-        {{ form_label(form.name, null, {'label_attr': {'class': 'form-label'}}) }}
-        <span class="required">*</span>
-        {{ form_widget(form.name) }}
-        {{ form_errors(form.name) }}
+            <!-- Section 1 : Vos coordonnées -->
+            <div class="form-section">
+                <div class="form-section__title">
+                    <span class="form-section__number">1</span>
+                    Vos coordonnées
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        {{ form_label(form.name, null, {'label_attr': {'class': 'form-label'}}) }}
+                        <span class="required">*</span>
+                        {{ form_widget(form.name, {'attr': {'class': 'form-input', 'placeholder': 'Votre nom complet'}}) }}
+                        {{ form_errors(form.name) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.company, null, {'label_attr': {'class': 'form-label'}}) }}
+                        <span class="required">*</span>
+                        {{ form_widget(form.company, {'attr': {'class': 'form-input', 'placeholder': 'Nom de votre entreprise'}}) }}
+                        {{ form_errors(form.company) }}
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        {{ form_label(form.email, null, {'label_attr': {'class': 'form-label'}}) }}
+                        <span class="required">*</span>
+                        {{ form_widget(form.email, {'attr': {'class': 'form-input', 'placeholder': 'votre.email@entreprise.com'}}) }}
+                        {{ form_errors(form.email) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.phone, null, {'label_attr': {'class': 'form-label'}}) }}
+                        <span class="required">*</span>
+                        {{ form_widget(form.phone, {'attr': {'class': 'form-input', 'placeholder': '06 12 34 56 78'}}) }}
+                        {{ form_errors(form.phone) }}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 2 : Votre besoin -->
+            <div class="form-section">
+                <div class="form-section__title">
+                    <span class="form-section__number">2</span>
+                    Votre besoin
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        {{ form_label(form.needType, null, {'label_attr': {'class': 'form-label'}}) }}
+                        <span class="required">*</span>
+                        {{ form_widget(form.needType, {'attr': {'class': 'form-select'}}) }}
+                        {{ form_errors(form.needType) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.position, null, {'label_attr': {'class': 'form-label'}}) }}
+                        <span class="required">*</span>
+                        {{ form_widget(form.position, {'attr': {'class': 'form-input', 'placeholder': 'Ex: Développeur web, Chef de projet...'}}) }}
+                        {{ form_errors(form.position) }}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    {{ form_label(form.description, null, {'label_attr': {'class': 'form-label'}}) }}
+                    <span class="required">*</span>
+                    {{ form_widget(form.description, {'attr': {'class': 'form-textarea', 'placeholder': 'Décrivez votre besoin, les compétences recherchées, le contexte du poste...'}}) }}
+                    {{ form_errors(form.description) }}
+                </div>
+            </div>
+
+            <!-- Section 3 : Pièce jointe -->
+            <div class="form-section">
+                <div class="form-section__title">
+                    <span class="form-section__number">3</span>
+                    Pièce jointe <span class="optional">(optionnelle)</span>
+                </div>
+
+                <div class="form-group">
+                    <div class="file-input-wrapper">
+                        <label for="{{ form.attachment.vars.id }}" class="file-input-label" id="attachLabel">
+                            <span>📎</span>
+                            <span>Joindre un fichier (PDF, DOCX — max 5 Mo)</span>
+                        </label>
+                        {{ form_widget(form.attachment, {'attr': {'class': 'file-input'}}) }}
+                    </div>
+                    <div id="fileName" class="file-name"></div>
+                    {{ form_errors(form.attachment) }}
+                </div>
+            </div>
+
+            <button type="submit" class="submit-btn" id="submitBtn">
+                Envoyer ma demande →
+            </button>
+
+        {{ form_end(form) }}
     </div>
 
-    <div class="form-group">
-        {{ form_label(form.company, null, {'label_attr': {'class': 'form-label'}}) }}
-        <span class="required">*</span>
-        {{ form_widget(form.company) }}
-        {{ form_errors(form.company) }}
-    </div>
-
-    <div class="form-group">
-        {{ form_label(form.email, null, {'label_attr': {'class': 'form-label'}}) }}
-        <span class="required">*</span>
-        {{ form_widget(form.email) }}
-        {{ form_errors(form.email) }}
-    </div>
-
-    <div class="form-group">
-        {{ form_label(form.phone, null, {'label_attr': {'class': 'form-label'}}) }}
-        <span class="required">*</span>
-        {{ form_widget(form.phone) }}
-        {{ form_errors(form.phone) }}
-    </div>
-
-    <div class="form-group">
-        {{ form_label(form.needType, null, {'label_attr': {'class': 'form-label'}}) }}
-        <span class="required">*</span>
-        {{ form_widget(form.needType) }}
-        {{ form_errors(form.needType) }}
-    </div>
-
-    <div class="form-group">
-        {{ form_label(form.position, null, {'label_attr': {'class': 'form-label'}}) }}
-        <span class="required">*</span>
-        {{ form_widget(form.position) }}
-        {{ form_errors(form.position) }}
-    </div>
-
-    <div class="form-group">
-        {{ form_label(form.description, null, {'label_attr': {'class': 'form-label'}}) }}
-        <span class="required">*</span>
-        {{ form_widget(form.description) }}
-        {{ form_errors(form.description) }}
-    </div>
-
-    <div class="form-group">
-        {{ form_label(form.attachment, null, {'label_attr': {'class': 'form-label'}}) }}
-        <div class="file-input-wrapper">
-            <label for="{{ form.attachment.vars.id }}" class="file-input-label">
-                <span>📎</span>
-                <span>Joindre un fichier (PDF, DOCX, max 5 Mo)</span>
-            </label>
-            {{ form_widget(form.attachment) }}
-        </div>
-        <div id="fileName" class="file-name"></div>
-        {{ form_errors(form.attachment) }}
-    </div>
-
-    <button type="submit" class="submit-btn">Envoyer ma demande</button>
-
-    {{ form_end(form) }}
-
-    <!-- Success message -->
-    <div id="successMessage" class="success-message" style="display: none;">
+    <!-- ── Message de succès ── -->
+    <div id="successMessage" class="success-message" style="display:none;">
         <div class="success-icon">✓</div>
         <p>Merci, votre demande a bien été reçue.</p>
-        <p style="font-size: 16px; margin-top: 10px; font-weight: 400;">Nous reviendrons vers vous très prochainement.</p>
+        <p style="font-size:16px; margin-top:10px; font-weight:400;">
+            Notre équipe vous recontacte sous 24h.
+        </p>
+        <a href="{{ path('app_home') }}" class="success-link">Retour à l'accueil</a>
     </div>
 {% endblock %}
 
 {% block javascripts %}
+    {{ parent() }}
     <script>
-        // Affichage du nom du fichier sélectionné
-        document.getElementById('{{ form.attachment.vars.id }}').addEventListener('change', function(e) {
-            const fileName = e.target.files[0]?.name;
-            const fileNameDisplay = document.getElementById('fileName');
-            if (fileName) {
-                fileNameDisplay.textContent = '📄 ' + fileName;
-                fileNameDisplay.style.display = 'block';
-            } else {
-                fileNameDisplay.style.display = 'none';
+        document.addEventListener('DOMContentLoaded', function () {
+
+            // ── Fichier joint ──
+            const attachInput = document.getElementById('{{ form.attachment.vars.id }}');
+            const attachLabel = document.getElementById('attachLabel');
+            const fileNameEl  = document.getElementById('fileName');
+
+            if (attachInput) {
+                attachInput.addEventListener('change', function () {
+                    const file = this.files[0];
+                    if (file) {
+                        const size = (file.size / 1024 / 1024).toFixed(2);
+                        fileNameEl.textContent = '✓ ' + file.name + ' (' + size + ' Mo)';
+                        fileNameEl.classList.add('success');
+                        attachLabel.style.borderColor = '#27ae60';
+                        attachLabel.style.background  = '#f0faf4';
+                        attachLabel.style.color       = '#27ae60';
+                    } else {
+                        fileNameEl.textContent = '';
+                        fileNameEl.classList.remove('success');
+                        attachLabel.style.cssText = '';
+                    }
+                });
             }
+
+            // ── Désactivation du bouton à la soumission ──
+            const form      = document.getElementById('offerForm');
+            const submitBtn = document.getElementById('submitBtn');
+            if (form) {
+                form.addEventListener('submit', function () {
+                    submitBtn.disabled    = true;
+                    submitBtn.textContent = 'Envoi en cours…';
+                });
+            }
+
+            // ── Affichage du succès si flash présent ──
+            {% if app.flashes('success')|length > 0 %}
+                document.getElementById('formContainer').style.display    = 'none';
+                document.getElementById('successMessage').style.display   = 'block';
+            {% endif %}
         });
-
-        // Affichage du message de succès si présent dans les flash messages
-        {% if app.flashes('success')|length > 0 %}
-
-        console.log(document.getElementById('offerForm'));
-        // Twig génère ce code JavaScript uniquement si flash existe
-            document.getElementById('successMessage').classList.remove('d-none');
-            document.getElementById('offerForm').classList.add('hidden');
-            document.getElementById('offerForm').classList.add('d-none');
-        {% endif %}
     </script>
 {% endblock %}

@@ -21,10 +21,11 @@
 
             <!-- Navigation Menu -->
             <nav class="main-nav">
+                {% set route = app.request.attributes.get('_route') %}
                 <ul class="nav-menu">
-                    <li class="nav-item"><a href="{{ path('app_home') }}" class="nav-link">Accueil</a></li>
-                    <li class="nav-item"><a href="" class="nav-link">Services</a></li>
-                    <li class="nav-item"><a href="" class="nav-link">À propos</a></li>
+                    <li class="nav-item"><a href="{{ path('app_home') }}" class="nav-link{{ route == 'app_home' ? ' active' : '' }}">Accueil</a></li>
+                    <li class="nav-item"><a href="{{ path('app_services') }}" class="nav-link{{ route == 'app_services' ? ' active' : '' }}">Services</a></li>
+                    <li class="nav-item"><a href="{{ path('app_about') }}" class="nav-link{{ route == 'app_about' ? ' active' : '' }}">À propos</a></li>
                 </ul>
             </nav>
         </header>

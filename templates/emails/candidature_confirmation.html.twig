@@ -169,7 +169,10 @@
 
     <div class="cv-info">
         <p style="margin: 10px 0;">
-            <strong>📄 CV téléchargé :</strong> {{ candidature.cv }}
+            <strong>📄 CV téléchargé :</strong>
+            <a href=" {{absolute_url(asset('uploads/' ~ candidature.cv)) }}" target="_blank" class="btn btn-sm btn-primary">
+                <i class="fa fa-download"></i> CV
+            </a>
         </p>
         <p style="font-size: 0.9em; color: #7f8c8d; margin: 5px 0;">
             Le CV est disponible dans le répertoire : <code>uploads/cv/</code>

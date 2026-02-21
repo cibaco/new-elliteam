@@ -65,7 +65,7 @@ final class CandidateController extends AbstractController
     private function sendConfirmationEmail(Candidature $candidature, MailerInterface $mailer): void
     {
         $email = (new Email())
-            ->from('noreply@votre-entreprise.com')
+            ->from('noreply@elliteam.com')
             ->to($candidature->getEmail())
             ->subject('Confirmation de réception de votre candidature')
             ->html($this->renderView('emails/candidature_confirmation.html.twig', [
@@ -75,6 +75,7 @@ final class CandidateController extends AbstractController
         try {
             $mailer->send($email);
         } catch (\Exception $e) {
+            $this->addFlash('error', 'Une erreur est survenue lors de l\'envoi de votre candidature. Veuillez réessayer.');
             // Log l'erreur mais ne pas bloquer le processus
         }
     }
@@ -82,8 +83,8 @@ final class CandidateController extends AbstractController
     private function sendNotificationToHR(Candidature $candidature, MailerInterface $mailer): void
     {
         $email = (new Email())
-            ->from('noreply@votre-entreprise.com')
-            ->to('rh@votre-entreprise.com')
+            ->from('noreply@elliteam.com')
+            ->to('rh@elliteam.com')
             ->subject('Nouvelle candidature reçue - ' . $candidature->getPosteRecherche())
             ->html($this->renderView('emails/candidature_notification_hr.html.twig', [
                 'candidature' => $candidature,
@@ -92,6 +93,7 @@ final class CandidateController extends AbstractController
         try {
             $mailer->send($email);
         } catch (\Exception $e) {
+            $this->addFlash('error', 'Une erreurf est survenue lors de l\'envoi de votre candidature. Veuillez réessayer.');
             // Log l'erreur mais ne pas bloquer le processus
         }
     }

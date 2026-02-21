@@ -1,0 +1,141 @@
+{% extends 'new_base.html.twig' %}
+
+{% block title %}Elliteam - Nos Services{% endblock %}
+
+{% block main %}
+    <a href="{{ path('app_home') }}" class="back-link">Retour à l'accueil</a>
+
+    <!-- ── Hero block ── -->
+    <div class="about-hero-block">
+        <span class="hero-accent">Ce que nous faisons</span>
+        <h2>Nos Services</h2>
+        <p>Recrutement CDI et missions en prestation : deux expertises complémentaires<br>pour répondre à tous vos besoins digitaux.</p>
+    </div>
+
+    <!-- ── Bloc 01 — Nos offres ── -->
+    <div class="about-block">
+        <div class="about-block-number">01</div>
+        <div class="about-block-content" style="width:100%">
+            <h3>Nos offres</h3>
+            <div class="services-grid">
+
+                <!-- CDI -->
+                <div class="service-card service-card--primary">
+                    <div class="service-card__icon">💼</div>
+                    <h4>Recrutement CDI</h4>
+                    <p>Nous identifions et préqualifions les meilleurs talents du digital pour intégrer durablement vos équipes.</p>
+                    <ul class="service-card__list">
+                        <li>Sourcing multi-canal ciblé</li>
+                        <li>Entretiens de qualification</li>
+                        <li>Présentation de profils sélectionnés</li>
+                        <li>Suivi post-intégration</li>
+                    </ul>
+                    <a href="{{ path('app_company_offer') }}" class="service-card__cta">Je dépose une offre CDI</a>
+                </div>
+
+                <!-- Prestation -->
+                <div class="service-card service-card--secondary">
+                    <div class="service-card__icon">🚀</div>
+                    <h4>Missions en prestation</h4>
+                    <p>Besoin d'un expert pour un projet précis ? Nous mettons à votre disposition des profils disponibles rapidement.</p>
+                    <ul class="service-card__list">
+                        <li>Consultants disponibles sous 48h</li>
+                        <li>Profils techniques et fonctionnels</li>
+                        <li>Missions courtes ou longues durées</li>
+                        <li>Pilotage de la relation contractuelle</li>
+                    </ul>
+                    <a href="{{ path('app_company_offer') }}" class="service-card__cta service-card__cta--alt">Je dépose une offre prestation</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- ── Bloc 02 — Comment ça marche ── -->
+    <div class="about-block">
+        <div class="about-block-number">02</div>
+        <div class="about-block-content" style="width:100%">
+            <h3>Comment ça marche ?</h3>
+            <p class="process-intro">Un processus simple et transparent, du premier contact à l'intégration.</p>
+            <div class="process-steps">
+
+                <div class="process-step">
+                    <div class="process-step__circle">1</div>
+                    <div class="process-step__connector"></div>
+                    <div class="process-step__icon">📋</div>
+                    <h5>Soumission</h5>
+                    <p>Vous déposez votre offre ou candidature en quelques minutes via notre formulaire en ligne.</p>
+                </div>
+
+                <div class="process-step">
+                    <div class="process-step__circle">2</div>
+                    <div class="process-step__connector"></div>
+                    <div class="process-step__icon">🔍</div>
+                    <h5>Analyse</h5>
+                    <p>Notre équipe étudie votre besoin et sélectionne les profils ou opportunités les plus adaptés.</p>
+                </div>
+
+                <div class="process-step">
+                    <div class="process-step__circle">3</div>
+                    <div class="process-step__connector"></div>
+                    <div class="process-step__icon">🤝</div>
+                    <h5>Matching</h5>
+                    <p>Nous organisons les échanges entre les deux parties et accompagnons la prise de décision.</p>
+                </div>
+
+                <div class="process-step">
+                    <div class="process-step__circle">4</div>
+                    <div class="process-step__connector process-step__connector--last"></div>
+                    <div class="process-step__icon">✅</div>
+                    <h5>Intégration</h5>
+                    <p>Nous restons présents après la signature pour garantir une intégration réussie.</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- ── Bloc 03 — Pourquoi Elliteam ── -->
+    <div class="about-mission-block">
+        <div class="mission-badge">⭐</div>
+        <div class="about-block-content" style="width:100%">
+            <h3>Pourquoi choisir Elliteam ?</h3>
+            <div class="values-grid">
+                <div class="value-card">
+                    <div class="value-icon">🎯</div>
+                    <h4>Spécialistes du digital</h4>
+                    <p>Nous connaissons vos métiers : dev, data, cloud, UX, product, cyber… Pas de généraliste ici.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">⚡</div>
+                    <h4>Réactivité garantie</h4>
+                    <p>Premier retour sous 24h. Des profils présentés en moins de 5 jours ouvrés.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">💬</div>
+                    <h4>Accompagnement humain</h4>
+                    <p>Un interlocuteur dédié tout au long du processus, accessible et à l'écoute.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">🔒</div>
+                    <h4>Confidentialité totale</h4>
+                    <p>Vos informations et celles des candidats sont traitées avec la plus stricte confidentialité.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── CTA ── -->
+    <div class="about-cta">
+        <h3>Prêt à démarrer ?</h3>
+        <p>Déposez votre offre ou votre candidature en quelques minutes.</p>
+        <div class="cta-buttons" style="margin-top: 30px; margin-bottom: 0;">
+            <button class="btn btn-primary">
+                <a href="{{ path('app_company_offer') }}">Je dépose une offre<br>(CDI / mission)</a>
+            </button>
+            <button class="btn btn-secondary">
+                <a href="{{ path('app_candidate_index') }}">Je dépose ma<br>candidature / CV</a>
+            </button>
+        </div>
+    </div>
+{% endblock %}

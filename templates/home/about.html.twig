@@ -1,0 +1,90 @@
+{% extends 'new_base.html.twig' %}
+
+{% block title %}Elliteam - À propos{% endblock %}
+
+{% block main %}
+    <a href="{{ path('app_home') }}" class="back-link">Retour à l'accueil</a>
+
+    <!-- ── Bloc titre ── -->
+    <div class="about-hero-block">
+        <span class="hero-accent">Qui sommes-nous</span>
+        <h2>À propos d'Elliteam</h2>
+        <p>Nous connectons les talents digitaux aux entreprises qui ont besoin d'eux,<br>avec simplicité, rapidité et bienveillance.</p>
+    </div>
+
+    <!-- ── Bloc 01 — Qui sommes-nous ── -->
+    <div class="about-block">
+        <div class="about-block-number">01</div>
+        <div class="about-block-content">
+            <h3>Qui sommes-nous ?</h3>
+            <p>
+                Elliteam est une agence de recrutement spécialisée dans les métiers du digital.
+                Nous accompagnons aussi bien les entreprises à la recherche de profils qualifiés
+                que les candidats en quête de leur prochain défi professionnel.
+            </p>
+            <p>
+                Fondée avec l'ambition de rendre le recrutement digital plus humain et accessible,
+                Elliteam met en relation les meilleurs talents avec les projets qui leur correspondent,
+                que ce soit en CDI ou en mission de prestation.
+            </p>
+        </div>
+    </div>
+
+    <!-- ── Bloc 02 — Notre mission ── -->
+    <div class="about-mission-block">
+        <div class="mission-badge">🎯</div>
+        <div class="about-block-content">
+            <h3>Notre mission</h3>
+            <p>
+                Faciliter la rencontre entre les entreprises et les talents du digital en offrant
+                un processus de recrutement transparent, rapide et efficace. Nous croyons que
+                chaque profil mérite d'être considéré avec attention, et que chaque entreprise
+                mérite de trouver le héros digital qu'elle cherche.
+            </p>
+        </div>
+    </div>
+
+    <!-- ── Bloc 03 — Nos valeurs ── -->
+    <div class="about-block">
+        <div class="about-block-number">03</div>
+        <div class="about-block-content" style="width:100%">
+            <h3>Nos valeurs</h3>
+            <div class="values-grid">
+                <div class="value-card">
+                    <div class="value-icon">🤝</div>
+                    <h4>Bienveillance</h4>
+                    <p>Chaque candidat et chaque entreprise est traité avec respect et attention. Nous prenons le temps de comprendre vos besoins et vos aspirations.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">⚡</div>
+                    <h4>Réactivité</h4>
+                    <p>Nous savons que le temps est précieux. Notre engagement : vous répondre rapidement et vous proposer des profils ou des opportunités adaptés sans délai.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">🔍</div>
+                    <h4>Expertise</h4>
+                    <p>Spécialisés dans le digital, nous maîtrisons les métiers, les compétences et les enjeux de votre secteur pour vous proposer des candidats vraiment qualifiés.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">💡</div>
+                    <h4>Transparence</h4>
+                    <p>Pas de surprise ni de zone d'ombre. Nous communiquons clairement à chaque étape du processus, pour que vous ayez toujours une visibilité complète.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="about-cta">
+        <h3>Prêt à travailler avec nous ?</h3>
+        <p>Que vous soyez une entreprise ou un candidat, faites le premier pas dès aujourd'hui.</p>
+        <div class="cta-buttons" style="margin-top: 30px; margin-bottom: 0;">
+            <button class="btn btn-primary">
+                <a href="{{ path('app_company_offer') }}">Je dépose une offre<br>(CDI / mission)</a>
+            </button>
+            <button class="btn btn-secondary">
+                <a href="{{ path('app_candidate_index') }}">Je dépose ma<br>candidature / CV</a>
+            </button>
+        </div>
+    </div>
+{% endblock %}
