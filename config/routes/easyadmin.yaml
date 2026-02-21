@@ -1,3 +1,0 @@
-easyadmin_routes:
-    resource: 'EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController'
-    type: easyadmin.routes

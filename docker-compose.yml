@@ -77,21 +77,9 @@ services:
     networks:
       - elliteam
 
-  # Redis
-  redis:
-    image: redis:7-alpine
-    container_name: elliteam_redis
-    ports:
-      - "6379:6379"
-    volumes:
-      - redis_data:/data
-    networks:
-      - elliteam
-
 networks:
   elliteam:
     driver: bridge
 
 volumes:
   mysql_data:
-  redis_data:
