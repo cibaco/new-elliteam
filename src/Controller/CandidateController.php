@@ -38,8 +38,8 @@ final class CandidateController extends AbstractController
                 }
 
                 // Sauvegarder en base de données
-                $entityManager->persist($candidature);
-                $entityManager->flush();
+               // $entityManager->persist($candidature);
+               // $entityManager->flush();
 
                 // Envoyer un email de confirmation au candidat
                 $this->sendConfirmationEmail($candidature, $mailer);

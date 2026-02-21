@@ -15,11 +15,9 @@ services:
     working_dir: /var/www/html
     environment:
       APP_ENV: ${APP_ENV:-dev}
-      DATABASE_URL: mysql://elliteam:elliteam@mysql:3306/elliteam?serverVersion=8.0
     networks:
       - elliteam
     depends_on:
-      - mysql
       - mailhog
 
   # Serveur Web Nginx
@@ -36,37 +34,6 @@ services:
     depends_on:
       - php
 
-  # Base de données MySQL
-  mysql:
-    image: mysql:8.0
-    container_name: elliteam_mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: Cibaco2024!
-      MYSQL_DATABASE: elliteam
-      MYSQL_USER: elliteam
-      MYSQL_PASSWORD: elliteam
-    volumes:
-      - mysql_data:/var/lib/mysql
-    ports:
-      - "3306:3306"
-    networks:
-      - elliteam
-
-  # PhpMyAdmin
-  phpmyadmin:
-    image: phpmyadmin:latest
-    container_name: elliteam_phpmyadmin
-    environment:
-      PMA_HOST: mysql
-      PMA_USER: root
-      PMA_PASSWORD: Cibaco2024!
-    ports:
-      - "8081:80"
-    networks:
-      - elliteam
-    depends_on:
-      - mysql
-
   # mailhog
   mailhog:
     image: mailhog/mailhog
@@ -80,6 +47,3 @@ services:
 networks:
   elliteam:
     driver: bridge
-
-volumes:
-  mysql_data:
