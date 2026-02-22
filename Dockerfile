@@ -1,7 +1,12 @@
 FROM php:8.2-apache
 
+# Désactiver mpm_event et activer mpm_prefork proprement
+RUN a2dismod mpm_event && a2dismod mpm_worker 2>/dev/null; a2enmod mpm_prefork
 RUN a2enmod rewrite
-RUN a2dismod mpm_event && a2enmod mpm_prefork
+
+# Supprimer les fichiers de chargement MPM en conflit
+RUN rm -f /etc/apache2/mods-enabled/mpm_event.load /etc/apache2/mods-enabled/mpm_event.conf \
+    /etc/apache2/mods-enabled/mpm_worker.load /etc/apache2/mods-enabled/mpm_worker.conf
 
 RUN apt-get update && apt-get install -y \
     libzip-dev \
@@ -24,7 +29,8 @@ RUN APP_ENV=prod DATABASE_URL="sqlite:///%kernel.project_dir%/var/data.db" php b
 
 RUN chown -R www-data:www-data /var/www/html/var
 
-RUN echo '#!/bin/bash\nsed -i "s/Listen 80/Listen ${PORT:-8080}/" /etc/apache2/ports.conf\nsed -i "s/:80/:${PORT:-8080}/" /etc/apache2/sites-available/000-default.conf\napache2-foreground' > /start.sh \
+# Script de démarrage : configurer le port puis lancer Apache
+RUN printf '#!/bin/bash\nset -e\nsed -i "s/Listen 80/Listen ${PORT:-8080}/" /etc/apache2/ports.conf\nsed -i "s/:80/:${PORT:-8080}/" /etc/apache2/sites-available/000-default.conf\nexec apache2-foreground\n' > /start.sh \
     && chmod +x /start.sh
 
 CMD ["/start.sh"]
