@@ -934,8 +934,36 @@ body {
         gap: 16px;
     }
 
+    .about-hero-block {
+        padding: 32px 20px;
+    }
+
+    .about-hero-block h2 {
+        font-size: 26px;
+    }
+
+    .about-hero-block p br {
+        display: none;
+    }
+
+    .about-block {
+        flex-direction: column;
+        padding: 22px;
+        gap: 16px;
+    }
+
+    .about-mission-block {
+        flex-direction: column;
+        padding: 22px;
+        gap: 16px;
+    }
+
     .about-cta {
         padding: 36px 22px;
+    }
+
+    .about-cta h3 {
+        font-size: 20px;
     }
 
     .page-title {
