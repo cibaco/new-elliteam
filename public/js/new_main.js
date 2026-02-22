@@ -17,10 +17,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (menuToggle && navMenu) {
         menuToggle.addEventListener('click', function() {
-            // Toggle active class on menu
             navMenu.classList.toggle('active');
-            // Toggle active class on button for animation
             menuToggle.classList.toggle('active');
+            const expanded = menuToggle.classList.contains('active');
+            menuToggle.setAttribute('aria-expanded', expanded);
         });
 
         // Close menu when clicking on a link

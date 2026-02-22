@@ -21,6 +21,9 @@
 
             <!-- Navigation Menu -->
             <nav class="main-nav">
+                <button class="menu-toggle" aria-label="Menu" aria-expanded="false">
+                    <span class="hamburger"></span>
+                </button>
                 {% set route = app.request.attributes.get('_route') %}
                 <ul class="nav-menu">
                     <li class="nav-item"><a href="{{ path('app_home') }}" class="nav-link{{ route == 'app_home' ? ' active' : '' }}">Accueil</a></li>
