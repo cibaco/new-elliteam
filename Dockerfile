@@ -10,13 +10,13 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 COPY . /var/www/html
 WORKDIR /var/www/html
 
-RUN APP_ENV=prod DATABASE_URL="sqlite:///%kernel.project_dir%/var/data.db" composer install --no-dev --optimize-autoloader --no-scripts
-RUN APP_ENV=prod DATABASE_URL="sqlite:///%kernel.project_dir%/var/data.db" php bin/console cache:clear
+# Forcer prod AVANT tout
+RUN echo "APP_ENV=prod" > .env.local
+ENV APP_ENV=prod
+
+RUN DATABASE_URL="sqlite:///%kernel.project_dir%/var/data.db" composer install --no-dev --optimize-autoloader --no-scripts
+RUN DATABASE_URL="sqlite:///%kernel.project_dir%/var/data.db" php bin/console cache:clear --env=prod
 
 RUN chown -R www-data:www-data /var/www/html/var
-
-# Forcer le mode prod
-ENV APP_ENV=prod
-RUN echo "APP_ENV=prod" > /var/www/html/.env.local
 
 CMD php -S 0.0.0.0:${PORT:-8080} -t public
