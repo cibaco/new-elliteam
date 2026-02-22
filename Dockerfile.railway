@@ -22,6 +22,10 @@ RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' \
 RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' \
     /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
+# Écouter sur le port dynamique de Railway
+RUN sed -i 's/80/${PORT}/g' /etc/apache2/ports.conf
+RUN sed -i 's/:80/:${PORT}/g' /etc/apache2/sites-available/*.conf
+
 # Installer les dépendances
 WORKDIR /var/www/html
 RUN composer install --no-dev --optimize-autoloader
@@ -29,4 +33,6 @@ RUN composer install --no-dev --optimize-autoloader
 # Permissions
 RUN chown -R www-data:www-data /var/www/html/var
 
-EXPOSE 80
+CMD ["apache2-foreground"]
+
+
