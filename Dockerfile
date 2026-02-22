@@ -25,7 +25,7 @@ RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' \
 
 # Installer les dépendances
 WORKDIR /var/www/html
-RUN APP_ENV=prod composer install --no-dev --optimize-autoloader
+RUN APP_ENV=prod DATABASE_URL="mysql://user:pass@127.0.0.1:3306/dummy" composer install --no-dev --optimize-autoloader
 
 # Permissions
 RUN chown -R www-data:www-data /var/www/html/var
