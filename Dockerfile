@@ -1,46 +1,37 @@
-FROM php:8.3-fpm
 
-# Évite le warning Composer avec root
-ENV COMPOSER_ALLOW_SUPERUSER=1
+FROM php:8.2-apache
 
-# Installation des dépendances système
+# Activer mod_rewrite pour Symfony
+RUN a2enmod rewrite
+
+# Installer les extensions PHP nécessaires
 RUN apt-get update && apt-get install -y \
-    git \
-    curl \
-    zip \
-    unzip \
     libzip-dev \
-    libicu-dev \
-    libpng-dev \
-    libjpeg-dev \
-    libfreetype-dev \
-    libonig-dev \
-    && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install \
-        pdo_mysql \
-        zip \
-        intl \
-        gd \
-        opcache \
-    && apt-get clean && rm -rf /var/lib/apt/lists/*
+    unzip \
+    && docker-php-ext-install zip opcache
 
-# Composer
-COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+# Installer Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Permet d'éviter des erreurs Git dans le conteneur (Symfony Flex)
-RUN git config --global --add safe.directory '*'
+# Copier le code
+COPY . /var/www/html
 
-# Config PHP de base
-RUN echo "memory_limit=512M" > /usr/local/etc/php/conf.d/memory.ini \
-    && echo "upload_max_filesize=50M" > /usr/local/etc/php/conf.d/uploads.ini \
-    && echo "post_max_size=50M" > /usr/local/etc/php/conf.d/posts.ini \
-    && echo "date.timezone=Europe/Paris" > /usr/local/etc/php/conf.d/timezone.ini
+# Configurer Apache pour pointer vers /public
+ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
+RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' \
+    /etc/apache2/sites-available/*.conf
+RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' \
+    /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
-
-# Dossier de travail
+# Installer les dépendances
 WORKDIR /var/www/html
+RUN composer install --no-dev --optimize-autoloader
 
-# Port par défaut de PHP-FPM
-EXPOSE 9000
+# Permissions
+RUN chown -R www-data:www-data /var/www/html/var
 
-CMD ["php-fpm"]
+# Script de démarrage qui configure le port au runtime
+RUN echo '#!/bin/bash\nsed -i "s/Listen 80/Listen ${PORT:-8080}/" /etc/apache2/ports.conf\nsed -i "s/:80/:${PORT:-8080}/" /etc/apache2/sites-available/000-default.conf\napache2-foreground' > /start.sh \
+    && chmod +x /start.sh
+
+CMD ["/start.sh"]
