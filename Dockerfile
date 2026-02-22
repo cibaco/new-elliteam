@@ -15,4 +15,8 @@ RUN APP_ENV=prod DATABASE_URL="sqlite:///%kernel.project_dir%/var/data.db" php b
 
 RUN chown -R www-data:www-data /var/www/html/var
 
+# Forcer le mode prod
+ENV APP_ENV=prod
+RUN echo "APP_ENV=prod" > /var/www/html/.env.local
+
 CMD php -S 0.0.0.0:${PORT:-8080} -t public
