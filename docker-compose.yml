@@ -3,7 +3,7 @@ services:
   php:
     build:
       context: .
-      dockerfile: Dockerfile.railway
+      dockerfile: Dockerfile
       args:
         USER_ID: ${USER_ID:-1000}
         GROUP_ID: ${GROUP_ID:-1000}
